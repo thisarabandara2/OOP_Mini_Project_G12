@@ -172,7 +172,6 @@ CREATE TABLE IF NOT EXISTS `marks` (
 
 DROP TABLE IF EXISTS `medical`;
 CREATE TABLE IF NOT EXISTS `medical` (
-  `medical_id` int(15) NOT NULL auto_increment,
   `tg` varchar(10) NOT NULL,
   `email` varchar(30) NOT NULL,
   `level` int(10) NOT NULL,
@@ -181,6 +180,7 @@ CREATE TABLE IF NOT EXISTS `medical` (
   `ICT2` varchar(10) NOT NULL,
   `ICT3` varchar(10) NOT NULL,
   `ICT4` varchar(10) NOT NULL,
+  `id` int(15) NOT NULL auto_increment,
   PRIMARY KEY (`medical_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -194,7 +194,7 @@ DROP TABLE IF EXISTS `notice`;
 CREATE TABLE IF NOT EXISTS `notice` (
   `title` varchar(225) NOT NULL,
   `date` varchar(15) NOT NULL,
-  `noriceFile` varchar(50) NOT NULL
+  `noticeFile` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
