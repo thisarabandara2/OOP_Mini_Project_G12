@@ -25,7 +25,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
 --
 create database tecmis;
 USE tecmis;
@@ -75,13 +74,14 @@ CREATE TABLE IF NOT EXISTS `course` (
 -- Table structure for table `course timetable`
 --
 
-DROP TABLE IF EXISTS `course_timetable`;
-CREATE TABLE IF NOT EXISTS `course_timetable` (
-  `ct_id` varchar(15) NOT NULL,
-  `lecture_hall` int(10) NOT NULL,
-  `course_id` varchar(15) NOT NULL,
-  PRIMARY KEY (`ct_id`),
-  KEY `course_id` (`course_id`)
+DROP TABLE IF EXISTS `timetable`;
+CREATE TABLE IF NOT EXISTS `timetable` (
+  `fname` varchar(50) NOT NULL,
+  `department` varchar(20) NOT NULL,
+  `level` int(15) NOT NULL,
+  `semester` int(15) NOT NULL,
+  `file` varchar(100) NOT NULL,
+  PRIMARY KEY (`fname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -120,17 +120,6 @@ CREATE TABLE IF NOT EXISTS `exam` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `exam time table`
---
-
-DROP TABLE IF EXISTS `exam_time_table`;
-CREATE TABLE IF NOT EXISTS `exam_time_table` (
-  `et_id` varchar(15) NOT NULL,
-  `exam_hall` int(10) NOT NULL,
-  `exam_id` varchar(15) NOT NULL,
-  PRIMARY KEY (`et_id`),
-  KEY `exam_id` (`exam_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -183,14 +172,16 @@ CREATE TABLE IF NOT EXISTS `marks` (
 
 DROP TABLE IF EXISTS `medical`;
 CREATE TABLE IF NOT EXISTS `medical` (
-  `medical_id` varchar(15) NOT NULL,
-  `date` date NOT NULL,
-  `details` varchar(225) NOT NULL,
-  `student_id` varchar(10) NOT NULL,
-  `technical_officer_id` varchar(15) NOT NULL,
-  PRIMARY KEY (`medical_id`),
-  KEY `student_id` (`student_id`),
-  KEY `technical_officer_id` (`technical_officer_id`)
+  `medical_id` int(15) NOT NULL auto_increment,
+  `tg` varchar(10) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `level` int(10) NOT NULL,
+  `medFile` varchar(100) NOT NULL,
+  `ICT1` varchar(10) NOT NULL,
+  `ICT2` varchar(10) NOT NULL,
+  `ICT3` varchar(10) NOT NULL,
+  `ICT4` varchar(10) NOT NULL,
+  PRIMARY KEY (`medical_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -201,13 +192,9 @@ CREATE TABLE IF NOT EXISTS `medical` (
 
 DROP TABLE IF EXISTS `notice`;
 CREATE TABLE IF NOT EXISTS `notice` (
-  `notice_id` varchar(15) NOT NULL,
   `title` varchar(225) NOT NULL,
-  `description` varchar(225) NOT NULL,
-  `date` date NOT NULL,
-  `user_id` varchar(15) NOT NULL,
-  PRIMARY KEY (`notice_id`),
-  KEY `see_notice` (`user_id`)
+  `date` varchar(15) NOT NULL,
+  `noriceFile` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -251,24 +238,6 @@ CREATE TABLE IF NOT EXISTS `technical_officer` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `time table`
---
-
-DROP TABLE IF EXISTS `time_table`;
-CREATE TABLE IF NOT EXISTS `time_table` (
-  `time_table_id` varchar(15) NOT NULL,
-  `date` date NOT NULL,
-  `time` time(6) NOT NULL,
-  `et_id` varchar(15) NOT NULL,
-  `ct_id` varchar(15) NOT NULL,
-  PRIMARY KEY (`time_table_id`),
-  KEY `ct_id` (`ct_id`),
-  KEY `exam_time` (`et_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `user`
 --
 
@@ -304,11 +273,6 @@ ALTER TABLE `attendance`
 ALTER TABLE `course`
   ADD CONSTRAINT `course_ibfk_1` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `course timetable`
---
-ALTER TABLE `course_timetable`
-  ADD CONSTRAINT `course timetable_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `exam`
@@ -316,12 +280,6 @@ ALTER TABLE `course_timetable`
 ALTER TABLE `exam`
   ADD CONSTRAINT `exam_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `exam_ibfk_2` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `exam time table`
---
-ALTER TABLE `exam_time_table`
-  ADD CONSTRAINT `exam time table_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`exam_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `lecture`
@@ -338,19 +296,7 @@ ALTER TABLE `marks`
   ADD CONSTRAINT `marks_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `marks_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `marks_ibfk_3` FOREIGN KEY (`lecture_id`) REFERENCES `lecture` (`lecture_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `medical`
---
-ALTER TABLE `medical`
-  ADD CONSTRAINT `medical_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `medical_ibfk_2` FOREIGN KEY (`technical_officer_id`) REFERENCES `technical_officer` (`technical_officer_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `notice`
---
-ALTER TABLE `notice`
-  ADD CONSTRAINT `see_notice` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ 
 
 --
 -- Constraints for table `student`
@@ -368,18 +314,9 @@ ALTER TABLE `technical_officer`
   ADD CONSTRAINT `department` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`),
   ADD CONSTRAINT `technical officer_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `time table`
---
-ALTER TABLE `time_table`
-  ADD CONSTRAINT `exam_time` FOREIGN KEY (`et_id`) REFERENCES `exam_time_table` (`et_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `time table_ibfk_1` FOREIGN KEY (`ct_id`) REFERENCES `course_timetable` (`ct_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
 -- Constraints for table `user`
 --
-ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
