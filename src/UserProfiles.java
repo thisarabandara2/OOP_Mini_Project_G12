@@ -24,6 +24,7 @@ public class UserProfiles extends JFrame {
         setSize(750, 650);
         setTitle("Users");
         add(userProfile);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         createNewUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -41,6 +42,25 @@ public class UserProfiles extends JFrame {
 
     public void removeUser() {
 
+        String userid;
+        userid = textField1.getText();
+
+        try {
+            pst = con.prepareStatement("delete from user  where user_id = ?");
+
+            pst.setString(1, userid);
+
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Record Deleteeeeee!!!!!");
+            table_lord();
+
+        }
+
+        catch (SQLException e1)
+        {
+
+            e1.printStackTrace();
+        }
 
         }
 
@@ -65,10 +85,10 @@ public class UserProfiles extends JFrame {
 
     }
 
-    void table_lord(){
+    public void table_lord(){
         try
         {
-            pst = con.prepareStatement("select user_id,fname,lname,address,email,birth_day,contact_number,user_type from user");
+            pst = con.prepareStatement("select user_id as 'User ID',fname as 'First Name',lname as 'Last Name',address as 'Address',email as 'Email',birth_day as 'Birth Date',contact_number as 'Contact Number',user_type as 'User Type' from user");
             ResultSet rs = pst.executeQuery();
             table_1.setModel(DbUtils.resultSetToTableModel(rs));
         }

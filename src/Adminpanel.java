@@ -16,6 +16,7 @@ public class Adminpanel extends JFrame {
         setSize(750, 650);
         setTitle("Admin Panel");
         add(adminpanel);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
         userProfilesButton.addActionListener(new ActionListener() {

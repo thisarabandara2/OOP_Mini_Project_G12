@@ -31,7 +31,9 @@ public class User {
             while (rs.next()) {
                 String id = rs.getString("user_id");
                 String pw = rs.getString("password");
-                selectUser(id,pw);
+                if(id.equals(userin)){
+                    selectUser(id,pw);
+                }
 
             }
 
@@ -52,7 +54,7 @@ public class User {
             }
 
         }else{
-            JOptionPane.showMessageDialog(null, "This User Not Found");
+            //JOptionPane.showMessageDialog(null, "This User Not Found");
         }
         }
 
@@ -85,9 +87,9 @@ public class User {
                if(type.equals("student")){
                    Student std = new Student();
                 } else if (type == "lecturer") {
-                    //Lecturer lec = new Lecturer();
+                    //Lecturer lec = new Lecturer(); add lecture part
                } else if (type == "tecnicle officer") {
-                    //TecOfficer tecofficer = new TecOfficer();
+                    //TecOfficer tecofficer = new TecOfficer(); add technicle officer part
                 }
            }
 
