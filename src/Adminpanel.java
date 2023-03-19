@@ -56,7 +56,8 @@ public class Adminpanel extends JFrame {
     }
 
     private void createUserProfile() {
-            UserProfiles userpro = new UserProfiles();
+
+        UserProfiles userpro = new UserProfiles();
     }
 
 
