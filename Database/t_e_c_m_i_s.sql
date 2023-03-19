@@ -249,7 +249,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `address` varchar(225) NOT NULL,
   `password` varchar(30) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `birth_day` int(15) NOT NULL,
+  `birth_day` varchar(15) NOT NULL,
   `contact_number` varchar(11) NOT NULL,
   `user_type` varchar(20) NOT NULL,
   PRIMARY KEY (`user_id`)
@@ -323,6 +323,6 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
-
+INSERT INTO `user` (`user_id`, `fname`, `lname`, `address`, `password`, `email`, `birth_day`, `contact_number`, `user_type`) VALUES ('tg', 'Test ', 'User', 'SL', '123', 'test@gmail.com','2000/01/02', '077123123', 'student');
 
 
