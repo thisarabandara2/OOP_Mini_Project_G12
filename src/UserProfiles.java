@@ -28,7 +28,7 @@ public class UserProfiles extends JFrame {
         createNewUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add user registration part
+                RestrationForm myForm = new RestrationForm();
             }
         });
 

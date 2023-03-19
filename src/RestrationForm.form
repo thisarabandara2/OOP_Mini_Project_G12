@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="RestrationForm">
+  <grid id="27dc6" binding="registerPanel" layout-manager="GridLayoutManager" row-count="15" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
+    <constraints>
+      <xy x="31" y="20" width="489" height="563"/>
+    </constraints>
+    <properties>
+      <background color="-12586342"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="98ba7" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Britannic Bold" size="48" style="1"/>
+          <text value="Register"/>
+        </properties>
+      </component>
+      <component id="e269b" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <enabled value="true"/>
+          <horizontalAlignment value="2"/>
+          <horizontalTextPosition value="2"/>
+          <icon value="new.png"/>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="e8654" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+          <text value="First Name"/>
+        </properties>
+      </component>
+      <component id="6058a" class="javax.swing.JTextField" binding="tffname">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+        </properties>
+      </component>
+      <component id="55015" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+          <text value="Email"/>
+        </properties>
+      </component>
+      <component id="a1370" class="javax.swing.JTextField" binding="tfemail">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+        </properties>
+      </component>
+      <component id="db0ad" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+          <text value="Birth Day"/>
+        </properties>
+      </component>
+      <component id="967fa" class="javax.swing.JTextField" binding="tfbirthday">
+        <constraints>
+          <grid row="6" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+        </properties>
+      </component>
+      <component id="86835" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+          <text value="Contact number"/>
+        </properties>
+      </component>
+      <component id="b6e35" class="javax.swing.JTextField" binding="tfcontactnumber">
+        <constraints>
+          <grid row="7" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+        </properties>
+      </component>
+      <component id="e2cf" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+          <text value="Password"/>
+        </properties>
+      </component>
+      <component id="a6447" class="javax.swing.JPasswordField" binding="pfpassword">
+        <constraints>
+          <grid row="11" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+        </properties>
+      </component>
+      <component id="c6203" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+          <text value="Confirm Password"/>
+        </properties>
+      </component>
+      <component id="6f70c" class="javax.swing.JPasswordField" binding="pfconfirmpassword">
+        <constraints>
+          <grid row="12" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+        </properties>
+      </component>
+      <component id="bae68" class="javax.swing.JButton" binding="btnRegister">
+        <constraints>
+          <grid row="14" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+          <text value="Register"/>
+        </properties>
+      </component>
+      <component id="d238c" class="javax.swing.JButton" binding="btnCancel">
+        <constraints>
+          <grid row="14" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+          <text value="Cancel"/>
+        </properties>
+      </component>
+      <vspacer id="84d2c">
+        <constraints>
+          <grid row="13" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <component id="b56e4" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+          <text value="User ID"/>
+        </properties>
+      </component>
+      <component id="21318" class="javax.swing.JTextField" binding="tfuserid">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+        </properties>
+      </component>
+      <component id="34de7" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+          <text value="Last Name"/>
+        </properties>
+      </component>
+      <component id="85054" class="javax.swing.JTextField" binding="tflname">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+        </properties>
+      </component>
+      <component id="98951" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+          <text value="Address"/>
+        </properties>
+      </component>
+      <component id="6d62d" class="javax.swing.JTextField" binding="tfaddress">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+        </properties>
+      </component>
+      <component id="e1d76" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+          <text value="User Type"/>
+        </properties>
+      </component>
+      <component id="6afd4" class="javax.swing.JTextField" binding="tfusertype">
+        <constraints>
+          <grid row="8" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+        </properties>
+      </component>
+      <component id="fac9b" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+          <text value="Admin ID"/>
+        </properties>
+      </component>
+      <component id="69e5b" class="javax.swing.JTextField" binding="tfadminid">
+        <constraints>
+          <grid row="10" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+        </properties>
+      </component>
+      <component id="f8430" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+          <text value="Department"/>
+        </properties>
+      </component>
+      <component id="70668" class="javax.swing.JTextField" binding="tfdepartment">
+        <constraints>
+          <grid row="9" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Times New Roman" size="18"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
