@@ -24,7 +24,6 @@ public class UserProfiles extends JFrame {
         setSize(750, 650);
         setTitle("Users");
         add(userProfile);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         createNewUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -39,13 +38,15 @@ public class UserProfiles extends JFrame {
             }
         });
     }
-
+    Connection con;
+    PreparedStatement pst;
     public void removeUser() {
 
         String userid;
         userid = textField1.getText();
 
         try {
+
             pst = con.prepareStatement("delete from user  where user_id = ?");
 
             pst.setString(1, userid);
@@ -65,10 +66,10 @@ public class UserProfiles extends JFrame {
         }
 
 
-    Connection con;
-    PreparedStatement pst;
+
     public void connect(){
         try {
+
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost/tecmis", "root","root");
             System.out.println("Success");

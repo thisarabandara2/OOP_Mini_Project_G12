@@ -39,7 +39,7 @@ public class RestrationForm extends JDialog {
         super(parent);
         setTitle("Create a new account");
         setContentPane(registerPanel);
-        setMinimumSize(new Dimension(450, 474));
+        setSize(750, 650);
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -105,29 +105,29 @@ public class RestrationForm extends JDialog {
 
     private Users addUserToDatabase(String userid, String fname, String lname, String address, String email, String birthday, String contactnumber, String usertype, String department, String adminid, String password, String confirmpassword) {
         Users user = null;
-        final String DB_URL = "jdbc:mysql://localhost:3306/t e c m i s";
+        final String DB_URL = "jdbc:mysql://localhost:3306/tecmis";
         final String USERNAME = "root";
-        final String PASSWORD = "";
+        final String PASSWORD = "root";
 
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
             // Connected to database successfully...
 
             Statement stmt = conn.createStatement();
-            String sql = "INSERT INTO user (userid, fname, lname, address, email, birthday, contactnumber, usertype,department, adminid, password) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO user (user_id, fname, lname, address, password, email, birth_day, contact_number, user_type,department) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, userid);
             preparedStatement.setString(2, fname);
             preparedStatement.setString(3, lname);
             preparedStatement.setString(4, address);
-            preparedStatement.setString(5, email);
-            preparedStatement.setString(6, birthday);
-            preparedStatement.setString(7, contactnumber);
-            preparedStatement.setString(8, usertype);
-            preparedStatement.setString(9, department);
-            preparedStatement.setString(10, adminid);
-            preparedStatement.setString(11, password);
+            preparedStatement.setString(5, password);
+            preparedStatement.setString(6, email);
+            preparedStatement.setString(7, birthday);
+            preparedStatement.setString(8, contactnumber);
+            preparedStatement.setString(9, usertype);
+            preparedStatement.setString(10, department);
+
 
             int addedRows = preparedStatement.executeUpdate();
             if (addedRows > 0) {
