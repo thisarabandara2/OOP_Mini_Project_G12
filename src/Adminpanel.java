@@ -55,7 +55,7 @@ public class Adminpanel extends JFrame {
     }
 
     private void createNotice() {
-        //add nortice part 
+        //add nortice part
     }
 
     private void createUserProfile() {
