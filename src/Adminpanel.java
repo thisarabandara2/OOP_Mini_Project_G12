@@ -47,13 +47,15 @@ public class Adminpanel extends JFrame {
     }
 
     private void createTimeTable() {
-
+            // add timetable part
     }
 
     private void createCourse() {
+        //ad create Course part
     }
 
     private void createNotice() {
+        //add nortice part 
     }
 
     private void createUserProfile() {
