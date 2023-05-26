@@ -30,6 +30,7 @@ public class Logging extends JFrame {
                     if(pword.equals("abc")){
                         Adminpanel adminpanel = new Adminpanel();
                     }else{
+                        JOptionPane.showMessageDialog(null,"Incorrect Username or Password","Try again",JOptionPane.ERROR_MESSAGE);
                         incorrectpw.setText("Incorrect Password");
 
                     }

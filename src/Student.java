@@ -43,6 +43,7 @@ public class Student extends JFrame {
         NORTICEButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 Notice notice1 = new Notice();
             }
         });
@@ -50,6 +51,7 @@ public class Student extends JFrame {
         editProfileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 EditProfile edit = new EditProfile();
             }
         });
@@ -60,7 +62,7 @@ public class Student extends JFrame {
 
         String url = "jdbc:mysql://localhost:3306/tecmis";
         String user = "root";
-        String password = "root";
+        String password = "";
 
 
         try {

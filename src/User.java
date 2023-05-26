@@ -16,10 +16,10 @@ public class User {
     public User() {
     }
 
-    private void mysqlQuary() {
+    private void mysqlQuary() { // Database connection and get data
         String url = "jdbc:mysql://localhost:3306/tecmis";
         String user = "root";
-        String password = "root";
+        String password = "";
 
         try {
             Connection con = DriverManager.getConnection(url, user, password);
@@ -50,11 +50,11 @@ public class User {
             if (pw.equals(passwordin)){
                 selectUser();
             }else{
-                JOptionPane.showMessageDialog(null, "Incorrect Password");
+                JOptionPane.showMessageDialog(null,"Incorrect Password!!","Try again",JOptionPane.ERROR_MESSAGE);
             }
 
         }else{
-            //JOptionPane.showMessageDialog(null, "This User Not Found");
+            JOptionPane.showMessageDialog(null,"This User Not Found","Try again",JOptionPane.ERROR_MESSAGE);
         }
         }
 
@@ -70,7 +70,7 @@ public class User {
     private void checkType() {
         String url = "jdbc:mysql://localhost:3306/tecmis";
         String user = "root";
-        String password = "root";
+        String password = "";
 
 
         try {
