@@ -21,25 +21,15 @@ public class RestrationForm extends JDialog {
     private JTextField tfuserid;
     private JTextField tflname;
     private JTextField tfaddress;
-    private JTextField tfusertype;
     private JTextField tfadminid;
     private JTextField tfdepartment;
+    private JComboBox comboBox1;
 
-    public RestrationForm(){
-        RestrationForm myForm = new RestrationForm(null);
-        Users user = myForm.user;
-        if (user != null) {
-            System.out.println("Successful registration of: " + user.fname);
-        } else {
-            System.out.println("Registration canceled");
-        }
-
-    }
     public RestrationForm(JFrame parent) {
         super(parent);
         setTitle("Create a new account");
         setContentPane(registerPanel);
-        setSize(750, 650);
+        setMinimumSize(new Dimension(450, 474));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -68,7 +58,7 @@ public class RestrationForm extends JDialog {
         String email = tfemail.getText();
         String birthday = tfbirthday.getText();
         String contactnumber = tfcontactnumber.getText();
-        String usertype = tfusertype.getText();
+        String usertype =comboBox1.getSelectedItem().toString();
         String department = tfdepartment.getText();
         String adminid = tfadminid.getText();
         String password = String.valueOf(pfpassword.getCursor());
@@ -105,29 +95,29 @@ public class RestrationForm extends JDialog {
 
     private Users addUserToDatabase(String userid, String fname, String lname, String address, String email, String birthday, String contactnumber, String usertype, String department, String adminid, String password, String confirmpassword) {
         Users user = null;
-        final String DB_URL = "jdbc:mysql://localhost:3306/tecmis";
+        final String DB_URL = "jdbc:mysql://localhost:3306/t e c m i s";
         final String USERNAME = "root";
-        final String PASSWORD = "root";
+        final String PASSWORD = "";
 
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
             // Connected to database successfully...
 
             Statement stmt = conn.createStatement();
-            String sql = "INSERT INTO user (user_id, fname, lname, address, password, email, birth_day, contact_number, user_type,department) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO user (userid, fname, lname, address, email, birthday, contactnumber, usertype,department, adminid, password) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, userid);
             preparedStatement.setString(2, fname);
             preparedStatement.setString(3, lname);
             preparedStatement.setString(4, address);
-            preparedStatement.setString(5, password);
-            preparedStatement.setString(6, email);
-            preparedStatement.setString(7, birthday);
-            preparedStatement.setString(8, contactnumber);
-            preparedStatement.setString(9, usertype);
-            preparedStatement.setString(10, department);
-
+            preparedStatement.setString(5, email);
+            preparedStatement.setString(6, birthday);
+            preparedStatement.setString(7, contactnumber);
+            preparedStatement.setString(8, usertype);
+            preparedStatement.setString(9, department);
+            preparedStatement.setString(10, adminid);
+            preparedStatement.setString(11, password);
 
             int addedRows = preparedStatement.executeUpdate();
             if (addedRows > 0) {
@@ -154,5 +144,14 @@ public class RestrationForm extends JDialog {
         return user;
     }
 
+    public static void main(String[] args) {
+        RestrationForm myForm = new RestrationForm(null);
+        Users user = myForm.user;
+        if (user != null) {
+            System.out.println("Successful registration of: " + user.fname);
+        } else {
+            System.out.println("Registration canceled");
+        }
+    }
 
 }
