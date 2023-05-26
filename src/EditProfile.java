@@ -11,7 +11,6 @@ public class EditProfile extends JFrame{
         setVisible(true);
         setSize(750, 650);
         setTitle("Edit Profile");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         add(edit);
 
     }

@@ -49,6 +49,7 @@ public class User {
         if (id.equals(userin)) {
             if (pw.equals(passwordin)){
                 selectUser();
+
             }else{
                 JOptionPane.showMessageDialog(null,"Incorrect Password!!","Try again",JOptionPane.ERROR_MESSAGE);
             }
@@ -78,17 +79,17 @@ public class User {
             //System.out.println("Connected to the MySQL database");
 
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT user_type FROM user where user_id ='"+userin+"'");
+            ResultSet rs = stmt.executeQuery("SELECT usertype FROM user where user_id ='"+userin+"'");
 
 
 
            while (rs.next()) {
-               String type = rs.getString("user_type");
-               if(type.equals("student")){
+               String type = rs.getString("usertype");
+               if(type.equals("Student")){
                    Student std = new Student();
-                } else if (type == "lecturer") {
+                } else if (type == "Lecturer") {
                     //Lecturer lec = new Lecturer(); add lecture part
-               } else if (type == "tecnicle officer") {
+               } else if (type == "Technical officer") {
                     //TecOfficer tecofficer = new TecOfficer(); add technicle officer part
                 }
            }

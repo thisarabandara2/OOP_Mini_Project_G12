@@ -51,7 +51,7 @@ public class RestrationForm extends JDialog {
     }
 
     private void registerUser() {
-        String userid = tfuserid.getText();
+        String user_id = tfuserid.getText();
         String fname = tffname.getText();
         String lname = tflname.getText();
         String address = tfaddress.getText();
@@ -64,7 +64,7 @@ public class RestrationForm extends JDialog {
         String password = String.valueOf(pfpassword.getCursor());
         String confirmpassword= String.valueOf(pfconfirmpassword.getCursor());
 
-        if (userid.isEmpty() || fname.isEmpty() || lname.isEmpty() || address.isEmpty() || email.isEmpty() || birthday.isEmpty() || contactnumber.isEmpty() || usertype.isEmpty() || department.isEmpty() || adminid.isEmpty() || password.isEmpty() || confirmpassword.isEmpty()) {
+        if (user_id.isEmpty() || fname.isEmpty() || lname.isEmpty() || address.isEmpty() || email.isEmpty() || birthday.isEmpty() || contactnumber.isEmpty() || usertype.isEmpty() || department.isEmpty() || adminid.isEmpty() || password.isEmpty() || confirmpassword.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Please enter all fields",
                     "Try again",
@@ -80,7 +80,7 @@ public class RestrationForm extends JDialog {
             return;
         }
 
-        user = addUserToDatabase(userid, fname, lname, address, email, birthday, contactnumber, usertype,department, adminid,password,confirmpassword);
+        user = addUserToDatabase(user_id, fname, lname, address, email, birthday, contactnumber, usertype,department, adminid,password);
         if (user != null) {
             dispose();
         } else {
@@ -93,9 +93,9 @@ public class RestrationForm extends JDialog {
 
     Users user;
 
-    private Users addUserToDatabase(String userid, String fname, String lname, String address, String email, String birthday, String contactnumber, String usertype, String department, String adminid, String password, String confirmpassword) {
+    private Users addUserToDatabase(String user_id, String fname, String lname, String address, String email, String birthday, String contactnumber, String usertype, String department, String adminid, String password) {
         Users user = null;
-        final String DB_URL = "jdbc:mysql://localhost:3306/t e c m i s";
+        final String DB_URL = "jdbc:mysql://localhost:3306/tecmis";
         final String USERNAME = "root";
         final String PASSWORD = "";
 
@@ -104,10 +104,10 @@ public class RestrationForm extends JDialog {
             // Connected to database successfully...
 
             Statement stmt = conn.createStatement();
-            String sql = "INSERT INTO user (userid, fname, lname, address, email, birthday, contactnumber, usertype,department, adminid, password) " +
+            String sql = "INSERT INTO user (user_id, fname, lname, address, email, birthday, contactnumber, usertype,department, adminid, password) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, userid);
+            preparedStatement.setString(1, user_id);
             preparedStatement.setString(2, fname);
             preparedStatement.setString(3, lname);
             preparedStatement.setString(4, address);
@@ -122,7 +122,7 @@ public class RestrationForm extends JDialog {
             int addedRows = preparedStatement.executeUpdate();
             if (addedRows > 0) {
                 user = new Users();
-                user.userid = userid;
+                user.userid = user_id;
                 user.fname = fname;
                 user.lname = lname;
                 user.address = address;

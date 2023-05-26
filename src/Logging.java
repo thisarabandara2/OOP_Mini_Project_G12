@@ -32,12 +32,14 @@ public class Logging extends JFrame {
                     }else{
                         JOptionPane.showMessageDialog(null,"Incorrect Username or Password","Try again",JOptionPane.ERROR_MESSAGE);
                         incorrectpw.setText("Incorrect Password");
+                        Logging log1 = new Logging();
 
                     }
                 }
                 else{
 
                         User user1 = new User(uname,pword);
+                        dispose();
                     {
                     }
 

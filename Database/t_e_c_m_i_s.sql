@@ -61,11 +61,10 @@ CREATE TABLE IF NOT EXISTS `course` (
   `course_name` varchar(225) NOT NULL,
   `course_credit` int(10) NOT NULL,
   `department` varchar(225) NOT NULL,
-  `theory` varchar(225) NOT NULL,
-  `practical` varchar(225) NOT NULL,
-  `department_id` varchar(15) NOT NULL,
-  PRIMARY KEY (`course_id`),
-  KEY `department_id` (`department_id`)
+  `course_type` varchar(225) NOT NULL,
+  `semester` varchar(225) NOT NULL,
+  `level` int(10) NOT NULL,
+  PRIMARY KEY (`course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -84,19 +83,6 @@ CREATE TABLE IF NOT EXISTS `timetable` (
   PRIMARY KEY (`fname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `department`
---
-
-DROP TABLE IF EXISTS `department`;
-CREATE TABLE IF NOT EXISTS `department` (
-  `department_id` varchar(15) NOT NULL,
-  `department_name` varchar(225) NOT NULL,
-  `department_head` varchar(225) NOT NULL,
-  PRIMARY KEY (`department_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -113,8 +99,7 @@ CREATE TABLE IF NOT EXISTS `exam` (
   `course_id` varchar(15) NOT NULL,
   `department_id` varchar(15) NOT NULL,
   PRIMARY KEY (`exam_id`),
-  KEY `course_id` (`course_id`),
-  KEY `department_id` (`department_id`)
+  KEY `course_id` (`course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -247,11 +232,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   `fname` varchar(225) NOT NULL,
   `lname` varchar(225) NOT NULL,
   `address` varchar(225) NOT NULL,
-  `password` varchar(30) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `birth_day` varchar(15) NOT NULL,
-  `contact_number` varchar(11) NOT NULL,
-  `user_type` varchar(20) NOT NULL,
+  `birthday` varchar(15) NOT NULL,
+  `contactnumber` varchar(11) NOT NULL,
+  `usertype` varchar(20) NOT NULL,
+  `department` varchar(20) NOT NULL,
+  `adminid` varchar(20) NOT NULL,
+  `password` varchar(30) NOT NULL,
+  `confirmpassword` varchar(30) NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -268,25 +256,16 @@ ALTER TABLE `attendance`
   ADD CONSTRAINT `takes_attendance` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `course`
---
-ALTER TABLE `course`
-  ADD CONSTRAINT `course_ibfk_1` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-
---
 -- Constraints for table `exam`
 --
 ALTER TABLE `exam`
-  ADD CONSTRAINT `exam_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `exam_ibfk_2` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `exam_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `lecture`
 --
 ALTER TABLE `lecture`
   ADD CONSTRAINT `lecture_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `lecture_ibfk_2` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `user type` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -304,14 +283,12 @@ ALTER TABLE `marks`
 ALTER TABLE `student`
   ADD CONSTRAINT `student_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `student_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `student_ibfk_3` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`exam_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `student_ibfk_4` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `student_ibfk_3` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`exam_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `technical officer`
 --
 ALTER TABLE `technical_officer`
-  ADD CONSTRAINT `department` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`),
   ADD CONSTRAINT `technical officer_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 
@@ -323,6 +300,5 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
-INSERT INTO `user` (`user_id`, `fname`, `lname`, `address`, `password`, `email`, `birth_day`, `contact_number`, `user_type`) VALUES ('tg', 'Test ', 'User', 'SL', '123', 'test@gmail.com','2000/01/02', '077123123', 'student');
 
 

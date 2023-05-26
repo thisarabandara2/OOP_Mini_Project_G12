@@ -27,7 +27,7 @@ public class UserProfiles extends JFrame {
         createNewUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RestrationForm myForm = new RestrationForm();
+                RestrationForm myForm = new RestrationForm(null);
             }
         });
 
@@ -89,7 +89,7 @@ public class UserProfiles extends JFrame {
     public void table_lord(){
         try
         {
-            pst = con.prepareStatement("select user_id as 'User ID',fname as 'First Name',lname as 'Last Name',address as 'Address',email as 'Email',birth_day as 'Birth Date',contact_number as 'Contact Number',user_type as 'User Type' from user");
+            pst = con.prepareStatement("select user_id as 'User ID',fname as 'First Name',lname as 'Last Name',address as 'Address',email as 'Email',birthday as 'Birth Date',contactnumber as 'Contact Number',usertype as 'User Type' from user");
             ResultSet rs = pst.executeQuery();
             table_1.setModel(DbUtils.resultSetToTableModel(rs));
         }

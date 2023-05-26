@@ -21,7 +21,6 @@ public class Notice extends JFrame {
         setVisible(true);
         setSize(750, 650);
         setTitle("Notice");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         add(notice);
 
         logOutButton.addActionListener(new ActionListener() {

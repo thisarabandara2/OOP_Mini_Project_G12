@@ -34,7 +34,9 @@ public class Student extends JFrame {
         logOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 Logging log2 = new Logging();
+                dispose();
 
             }
 
@@ -81,7 +83,7 @@ public class Student extends JFrame {
                 fullname.setText(fname +" " + lname);
                 String address1 = rs.getString("address");
                 address.setText(address1);
-                String contact = rs.getString("contact_number");
+                String contact = rs.getString("contactnumber");
                 conNumber.setText(contact);
                 String Email = rs.getString("email");
                 email.setText(Email);
