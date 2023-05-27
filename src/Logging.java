@@ -31,7 +31,6 @@ public class Logging extends JFrame {
                         Adminpanel adminpanel = new Adminpanel();
                     }else{
                         JOptionPane.showMessageDialog(null,"Incorrect Username or Password","Try again",JOptionPane.ERROR_MESSAGE);
-                        incorrectpw.setText("Incorrect Password");
 //                        Logging log1 = new Logging();
 
                     }

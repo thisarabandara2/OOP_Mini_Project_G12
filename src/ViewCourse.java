@@ -23,6 +23,7 @@ public class ViewCourse extends JFrame {
     int level;
     String Sem;
     String Dip;
+    String CourseID;
 
 
     public ViewCourse() {
@@ -48,6 +49,33 @@ public class ViewCourse extends JFrame {
                 dispose();
             }
         });
+        deleteSelectedCourseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getTableData();
+
+                try {
+                    Statement stmt = con.createStatement();
+                    stmt.executeUpdate("delete from course where course_id = '"+CourseID+"';");
+                    JOptionPane.showMessageDialog(null,
+                            "Course Deleted Successfully  !!");
+
+
+                    con.close();
+                    //System.out.println("Connection closed");
+                } catch (SQLException a) {
+                    System.err.println("Error connecting to the database: " + a.getMessage());
+                }
+                full_table_lord();
+
+            }
+        });
+    }
+
+    private void getTableData() {
+        int selectedRow = table1.getSelectedRow();
+        CourseID = table1.getValueAt(selectedRow,0).toString();
+
     }
 
     public void table_lord(){

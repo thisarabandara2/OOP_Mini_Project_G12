@@ -55,7 +55,7 @@ public class Student extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                EditProfile edit = new EditProfile();
+                editProfile edit = new editProfile();
             }
         });
         MYATTENDANCEButton.addActionListener(new ActionListener() {
