@@ -15,19 +15,21 @@ public class UserProfiles extends JFrame {
     private JTable table_1;
     private JButton removeButton;
     private JTextField textField1;
+    private JButton backButton;
 
     public UserProfiles() {
 
-        connect();
-        table_lord();
         setVisible(true);
         setSize(750, 650);
         setTitle("Users");
         add(userProfile);
+        connect();
+        table_lord();
         createNewUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 RestrationForm myForm = new RestrationForm(null);
+                dispose();
             }
         });
 
@@ -37,11 +39,17 @@ public class UserProfiles extends JFrame {
                 removeUser();
             }
         });
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new Adminpanel();
+            }
+        });
     }
     Connection con;
     PreparedStatement pst;
     public void removeUser() {
-
         String userid;
         userid = textField1.getText();
 
@@ -70,7 +78,7 @@ public class UserProfiles extends JFrame {
     public void connect(){
         try {
 
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost/tecmis", "root","");
             System.out.println("Success");
         }

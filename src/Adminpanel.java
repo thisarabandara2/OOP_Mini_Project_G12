@@ -9,6 +9,7 @@ public class Adminpanel extends JFrame {
     private JButton timeTablesButton;
     private JPanel adminpanel;
     private JLabel logoimage;
+    private JButton logOutButton;
 
     public Adminpanel(){
 
@@ -44,11 +45,17 @@ public class Adminpanel extends JFrame {
                 createTimeTable();
             }
         });
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
     }
 
     private void createTimeTable() {
             // add timetable part
-        dispose();
+
     }
 
     private void createCourse() {

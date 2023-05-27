@@ -24,6 +24,7 @@ public class RestrationForm extends JDialog {
     private JTextField tfadminid;
     private JTextField tfdepartment;
     private JComboBox comboBox1;
+    private JComboBox comboBoxDep;
 
     public RestrationForm(JFrame parent) {
         super(parent);
@@ -43,6 +44,7 @@ public class RestrationForm extends JDialog {
         btnCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                new UserProfiles().table_lord();
                 dispose();
             }
         });
@@ -59,7 +61,7 @@ public class RestrationForm extends JDialog {
         String birthday = tfbirthday.getText();
         String contactnumber = tfcontactnumber.getText();
         String usertype =comboBox1.getSelectedItem().toString();
-        String department = tfdepartment.getText();
+        String department = comboBoxDep.getSelectedItem().toString();
         String adminid = tfadminid.getText();
         String password = String.valueOf(pfpassword.getCursor());
         String confirmpassword= String.valueOf(pfconfirmpassword.getCursor());
@@ -82,7 +84,9 @@ public class RestrationForm extends JDialog {
 
         user = addUserToDatabase(user_id, fname, lname, address, email, birthday, contactnumber, usertype,department, adminid,password);
         if (user != null) {
-            dispose();
+            JOptionPane.showMessageDialog(this,
+                    "User Successfully Registered!!");
+                    // Add setTex null
         } else {
             JOptionPane.showMessageDialog(this,
                     "Failed to register new user",
