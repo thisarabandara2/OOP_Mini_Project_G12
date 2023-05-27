@@ -20,6 +20,7 @@ public class Student extends JFrame {
     private JLabel email;
     private JButton editProfileButton;
     private JLabel fullname;
+    private JButton MYATTENDANCEButton;
 
     public Student() {
         setVisible(true);
@@ -55,6 +56,18 @@ public class Student extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 EditProfile edit = new EditProfile();
+            }
+        });
+        MYATTENDANCEButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Attendance attendance = new Attendance();
+            }
+        });
+        MYCOURSESButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                courceDetails obj = new courceDetails();
             }
         });
     }

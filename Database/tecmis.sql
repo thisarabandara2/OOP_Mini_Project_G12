@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 14, 2023 at 12:57 PM
+-- Generation Time: May 27, 2023 at 12:25 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,15 +18,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `t e c m i s`
+-- Database: `tecmis`
 --
-
--- --------------------------------------------------------
-
---
---
-
-USE tecmis;
 
 -- --------------------------------------------------------
 
@@ -67,22 +59,16 @@ CREATE TABLE IF NOT EXISTS `course` (
   PRIMARY KEY (`course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `course timetable`
+-- Dumping data for table `course`
 --
 
-DROP TABLE IF EXISTS `timetable`;
-CREATE TABLE IF NOT EXISTS `timetable` (
-  `fname` varchar(50) NOT NULL,
-  `department` varchar(20) NOT NULL,
-  `level` int(15) NOT NULL,
-  `semester` int(15) NOT NULL,
-  `file` varchar(100) NOT NULL,
-  PRIMARY KEY (`fname`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+INSERT INTO `course` (`course_id`, `course_name`, `course_credit`, `department`, `course_type`, `semester`, `level`) VALUES
+('hjjjjjjjj', 'jjjjjjjjjjjj', 5, 'ET', 'Practical', 'Semester 1', 2),
+('ICT1212', 'PPP', 2, 'ICT', 'Practical', 'Semester 2', 2),
+('ICT23', 'OOAD', 5, 'ICT', 'Theory', 'Semester 1', 1),
+('sasa', 'sasa', 3, 'ICT', 'Theory', 'Semester 1', 1),
+('sasaasa', 'asasasasa', 2, 'BST', 'Theory', 'Semester 2', 1);
 
 -- --------------------------------------------------------
 
@@ -101,10 +87,6 @@ CREATE TABLE IF NOT EXISTS `exam` (
   PRIMARY KEY (`exam_id`),
   KEY `course_id` (`course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 
 -- --------------------------------------------------------
 
@@ -145,7 +127,6 @@ CREATE TABLE IF NOT EXISTS `marks` (
   `lecture_id` varchar(5) NOT NULL,
   PRIMARY KEY (`marks_id`),
   KEY `course_id` (`course_id`),
-  KEY `student_id` (`student_id`),
   KEY `lecture_id` (`lecture_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -157,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `marks` (
 
 DROP TABLE IF EXISTS `medical`;
 CREATE TABLE IF NOT EXISTS `medical` (
-  `medical_id` int(10) NOT NULL auto_increment,
+  `medical_id` int(10) NOT NULL AUTO_INCREMENT,
   `tg` varchar(10) NOT NULL,
   `email` varchar(30) NOT NULL,
   `level` int(10) NOT NULL,
@@ -194,19 +175,14 @@ CREATE TABLE IF NOT EXISTS `student` (
   `department_name` int(11) NOT NULL,
   `user_id` varchar(15) NOT NULL,
   `course_id` varchar(15) NOT NULL,
-  `exam_id` varchar(15) NOT NULL,
-  `department_id` varchar(15) NOT NULL,
-  PRIMARY KEY (`student_id`),
   KEY `user_id` (`user_id`),
-  KEY `student_ibfk_2` (`course_id`),
-  KEY `exam_id` (`exam_id`),
-  KEY `department_id` (`department_id`)
+  KEY `student_ibfk_2` (`course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `technical officer`
+-- Table structure for table `technical_officer`
 --
 
 DROP TABLE IF EXISTS `technical_officer`;
@@ -218,6 +194,22 @@ CREATE TABLE IF NOT EXISTS `technical_officer` (
   PRIMARY KEY (`technical_officer_id`),
   KEY `user_id` (`user_id`),
   KEY `department` (`department_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `timetable`
+--
+
+DROP TABLE IF EXISTS `timetable`;
+CREATE TABLE IF NOT EXISTS `timetable` (
+  `fname` varchar(50) NOT NULL,
+  `department` varchar(20) NOT NULL,
+  `level` int(15) NOT NULL,
+  `semester` int(15) NOT NULL,
+  `file` varchar(100) NOT NULL,
+  PRIMARY KEY (`fname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -238,10 +230,18 @@ CREATE TABLE IF NOT EXISTS `user` (
   `usertype` varchar(20) NOT NULL,
   `department` varchar(20) NOT NULL,
   `adminid` varchar(20) NOT NULL,
-  `password` varchar(30) NOT NULL,
-  `confirmpassword` varchar(30) NOT NULL,
+  `password` varchar(500) NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`user_id`, `fname`, `lname`, `address`, `email`, `birthday`, `contactnumber`, `usertype`, `department`, `adminid`, `password`) VALUES
+('tg731', 'Thisara', 'Bandara', 'Kandy', 'thisarabandara2@gmail.com', '2000.08.22', '0758228254', 'Student', 'ICT', '1', '123'),
+('tg739', 'cc', 'cccc', 'ccc', 'ccc', 'cc', 'ccc55', 'Student', 'BST', '1', '12345'),
+('tg750', 'asas', 'asasas', 'asasas', 'asasa', 'sasas', 'sasasas', 'Student', 'ET', 'a', 'javax.swing.plaf.basic.BasicTextUI$BasicCursor[Text Cursor]');
 
 --
 -- Constraints for dumped tables
@@ -252,8 +252,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 ALTER TABLE `attendance`
   ADD CONSTRAINT `Eligibility` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `add_attendance` FOREIGN KEY (`technical_officer_id`) REFERENCES `technical_officer` (`technical_officer_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `takes_attendance` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `add_attendance` FOREIGN KEY (`technical_officer_id`) REFERENCES `technical_officer` (`technical_officer_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `exam`
@@ -273,32 +272,22 @@ ALTER TABLE `lecture`
 --
 ALTER TABLE `marks`
   ADD CONSTRAINT `marks_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `marks_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `marks_ibfk_3` FOREIGN KEY (`lecture_id`) REFERENCES `lecture` (`lecture_id`) ON DELETE CASCADE ON UPDATE CASCADE;
- 
 
 --
 -- Constraints for table `student`
 --
 ALTER TABLE `student`
   ADD CONSTRAINT `student_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `student_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `student_ibfk_3` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`exam_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `student_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `technical officer`
+-- Constraints for table `technical_officer`
 --
 ALTER TABLE `technical_officer`
   ADD CONSTRAINT `technical officer_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-
--- Constraints for table `user`
---
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-

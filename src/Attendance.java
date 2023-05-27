@@ -78,7 +78,4 @@ public class Attendance extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        Attendance attendance = new Attendance();
-    }
 }

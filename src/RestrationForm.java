@@ -15,13 +15,12 @@ public class RestrationForm extends JDialog {
     private JTextField tfemail;
     private JTextField tfbirthday;
     private JTextField tfcontactnumber;
-    private JPasswordField pfpassword;
+    private JTextField pfpassword;
     private JPasswordField pfconfirmpassword;
     private JPanel registerPanel;
     private JTextField tfuserid;
     private JTextField tflname;
     private JTextField tfaddress;
-    private JTextField tfadminid;
     private JTextField tfdepartment;
     private JComboBox comboBox1;
     private JComboBox comboBoxDep;
@@ -62,9 +61,10 @@ public class RestrationForm extends JDialog {
         String contactnumber = tfcontactnumber.getText();
         String usertype =comboBox1.getSelectedItem().toString();
         String department = comboBoxDep.getSelectedItem().toString();
-        String adminid = tfadminid.getText();
-        String password = String.valueOf(pfpassword.getCursor());
-        String confirmpassword= String.valueOf(pfconfirmpassword.getCursor());
+        String adminid = "1";
+        String password = pfpassword.getText();
+        String confirmpassword= pfconfirmpassword.getText();
+        System.out.println("pw is" + pfconfirmpassword);
 
         if (user_id.isEmpty() || fname.isEmpty() || lname.isEmpty() || address.isEmpty() || email.isEmpty() || birthday.isEmpty() || contactnumber.isEmpty() || usertype.isEmpty() || department.isEmpty() || adminid.isEmpty() || password.isEmpty() || confirmpassword.isEmpty()) {
             JOptionPane.showMessageDialog(this,
