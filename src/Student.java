@@ -11,7 +11,7 @@ public class Student extends JFrame {
     private JLabel Name;
     private JButton NORTICEButton;
     private JButton MYCOURSESButton;
-    private JButton EXAMINATIONSButton;
+    private JButton TIMETABLESButton;
     private JPanel profile;
     private JLabel profilepicture;
     private JPanel accountDetails;
@@ -35,8 +35,6 @@ public class Student extends JFrame {
         logOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                Logging log2 = new Logging();
                 dispose();
 
             }
@@ -47,7 +45,7 @@ public class Student extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Notice notice1 = new Notice();
+                SeeNotices notice1 = new SeeNotices();
             }
         });
 
@@ -68,6 +66,12 @@ public class Student extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 courceDetails obj = new courceDetails();
+            }
+        });
+        TIMETABLESButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SeeTimeTables table = new SeeTimeTables();
             }
         });
     }

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="AddTimeTables">
+  <grid id="27dc6" binding="panel5" layout-manager="GridLayoutManager" row-count="18" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="470" height="489"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="4d1ae" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="PDF"/>
+        </properties>
+      </component>
+      <component id="f99d8" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Semester"/>
+        </properties>
+      </component>
+      <component id="8d53e" class="javax.swing.JComboBox" binding="semBox">
+        <constraints>
+          <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <model>
+            <item value="Select"/>
+            <item value="1"/>
+            <item value="2"/>
+          </model>
+        </properties>
+      </component>
+      <component id="8a601" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Day"/>
+        </properties>
+      </component>
+      <component id="6b78c" class="javax.swing.JComboBox" binding="dayBox">
+        <constraints>
+          <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <model>
+            <item value="Select"/>
+            <item value="Monday"/>
+            <item value="Tuesday"/>
+            <item value="Wednesday"/>
+            <item value="Thursday"/>
+            <item value="Friday"/>
+          </model>
+        </properties>
+      </component>
+      <component id="bcdd0" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Time"/>
+        </properties>
+      </component>
+      <component id="4b543" class="javax.swing.JTextField" binding="timeBox">
+        <constraints>
+          <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="d4833" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Subject"/>
+        </properties>
+      </component>
+      <component id="93528" class="javax.swing.JTextField" binding="subBox">
+        <constraints>
+          <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="360ac" class="javax.swing.JTextField" binding="chooseBox">
+        <constraints>
+          <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="3eea8" class="javax.swing.JButton" binding="browseBtn">
+        <constraints>
+          <grid row="13" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Browse"/>
+        </properties>
+      </component>
+      <component id="68cb2" class="javax.swing.JButton" binding="uploadBtn">
+        <constraints>
+          <grid row="15" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Insert"/>
+        </properties>
+      </component>
+      <component id="2508" class="javax.swing.JButton" binding="deleteBtn">
+        <constraints>
+          <grid row="15" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Delete"/>
+        </properties>
+      </component>
+      <scrollpane id="84f70">
+        <constraints>
+          <grid row="0" column="2" row-span="13" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="86d1d" class="javax.swing.JTable" binding="jTable1">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+      <vspacer id="38778">
+        <constraints>
+          <grid row="16" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="9102a">
+        <constraints>
+          <grid row="17" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="f4708">
+        <constraints>
+          <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="c33a">
+        <constraints>
+          <grid row="14" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <component id="81d9f" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="7" column="0" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Department"/>
+        </properties>
+      </component>
+      <component id="ceb6b" class="javax.swing.JComboBox" binding="depBox">
+        <constraints>
+          <grid row="7" column="1" row-span="2" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <model>
+            <item value="Select"/>
+            <item value="ICT"/>
+            <item value="BST"/>
+            <item value="ET"/>
+          </model>
+        </properties>
+      </component>
+      <component id="a0b2f" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Level"/>
+        </properties>
+      </component>
+      <component id="2ee1" class="javax.swing.JComboBox" binding="lelBox">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <model>
+            <item value="Select"/>
+            <item value="1"/>
+            <item value="2"/>
+            <item value="3"/>
+            <item value="4"/>
+          </model>
+        </properties>
+      </component>
+      <component id="395ed" class="javax.swing.JButton" binding="clearButton" default-binding="true">
+        <constraints>
+          <grid row="13" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Clear"/>
+        </properties>
+      </component>
+      <component id="19a70" class="javax.swing.JComboBox" binding="refBox">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <model>
+            <item value="ONLY FOR PDF"/>
+            <item value="L1 SEM 1"/>
+            <item value="L1 SEM 2"/>
+            <item value="L2 SEM 1"/>
+            <item value="L2 SEM 2"/>
+            <item value="L3 SEM 1"/>
+            <item value="L3 SEM 2"/>
+            <item value="L4 SEM 1"/>
+            <item value="L4 SEM 2"/>
+          </model>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

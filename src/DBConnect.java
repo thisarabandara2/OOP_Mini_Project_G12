@@ -18,4 +18,3 @@ public class DBConnect {
         return connection;
     }
 }
-

@@ -54,8 +54,8 @@ public class Adminpanel extends JFrame {
     }
 
     private void createTimeTable() {
-            // add timetable part
-
+        AddTimeTables add = new AddTimeTables();
+        dispose();
     }
 
     private void createCourse() {
@@ -64,7 +64,7 @@ public class Adminpanel extends JFrame {
     }
 
     private void createNotice() {
-        //add nortice part
+        AddNotices notice = new AddNotices();
         dispose();
     }
 

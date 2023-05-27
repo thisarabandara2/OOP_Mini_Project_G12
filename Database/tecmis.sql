@@ -136,19 +136,15 @@ CREATE TABLE IF NOT EXISTS `marks` (
 -- Table structure for table `medical`
 --
 
-DROP TABLE IF EXISTS `medical`;
-CREATE TABLE IF NOT EXISTS `medical` (
-  `medical_id` int(10) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `medical` (
   `tg` varchar(10) NOT NULL,
-  `email` varchar(30) NOT NULL,
   `level` int(10) NOT NULL,
-  `medFile` varchar(100) NOT NULL,
-  `ICT1` varchar(10) NOT NULL,
-  `ICT2` varchar(10) NOT NULL,
-  `ICT3` varchar(10) NOT NULL,
-  `ICT4` varchar(10) NOT NULL,
-  PRIMARY KEY (`medical_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `semester` int(10) NOT NULL,
+  `start_date` varchar(100) NOT NULL,
+  `end_date` varchar(100) NOT NULL,
+  `subjects` varchar(200) NOT NULL,
+  `medFile` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -156,12 +152,40 @@ CREATE TABLE IF NOT EXISTS `medical` (
 -- Table structure for table `notice`
 --
 
-DROP TABLE IF EXISTS `notice`;
-CREATE TABLE IF NOT EXISTS `notice` (
+CREATE TABLE `notice` (
+  `no` int(10) NOT NULL,
   `title` varchar(225) NOT NULL,
-  `date` varchar(15) NOT NULL,
+  `date` varchar(40) NOT NULL,
   `noticeFile` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `notice`
+--
+
+INSERT INTO `notice` (`no`, `title`, `date`, `noticeFile`) VALUES
+(7, 'asfghhh', '2023-05-28 00:59:32', 'notices/Renewal Payment TG750.pdf');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `notice`
+--
+ALTER TABLE `notice`
+  ADD PRIMARY KEY (`no`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `notice`
+--
+ALTER TABLE `notice`
+  MODIFY `no` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+COMMIT;
 
 -- --------------------------------------------------------
 
@@ -204,12 +228,14 @@ CREATE TABLE IF NOT EXISTS `technical_officer` (
 
 DROP TABLE IF EXISTS `timetable`;
 CREATE TABLE IF NOT EXISTS `timetable` (
-  `fname` varchar(50) NOT NULL,
+  `refNo` varchar(20) UNIQUE NOT NULL,
   `department` varchar(20) NOT NULL,
   `level` int(15) NOT NULL,
   `semester` int(15) NOT NULL,
-  `file` varchar(100) NOT NULL,
-  PRIMARY KEY (`fname`)
+  `day` varchar(40) NOT NULL,
+  `time` varchar(40) NOT NULL,
+  `subject` varchar(40) NOT NULL,
+  `file` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

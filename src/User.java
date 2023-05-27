@@ -1,5 +1,5 @@
+import javax.swing.*;
 import java.sql.*;
-import javax.swing.JOptionPane;
 
 public class User {
 
@@ -103,10 +103,6 @@ public class User {
 
     }
 
-    public class Main {
-        public static void main(String[] args) {
 
-        }
-    }
 
 }

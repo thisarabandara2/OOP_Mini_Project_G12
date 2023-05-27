@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="SeeTimeTables">
+  <grid id="27dc6" binding="panel2" layout-manager="GridLayoutManager" row-count="7" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties>
+      <background color="-5660006"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="3db8b" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="7" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="6d161" class="javax.swing.JComboBox" binding="pdfBox">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-10634310"/>
+          <foreground color="-12514038"/>
+          <model>
+            <item value="Select"/>
+            <item value="L1 SEM 1"/>
+            <item value="L1 SEM 2"/>
+            <item value="L2 SEM 1"/>
+            <item value="L2 SEM 2"/>
+            <item value="L3 SEM 1"/>
+            <item value="L3 SEM 2"/>
+            <item value="L4 SEM 1"/>
+            <item value="L4 SEM 2"/>
+          </model>
+        </properties>
+      </component>
+      <component id="a994f" class="javax.swing.JButton" binding="downloadBtn">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-12514038"/>
+          <foreground color="-13190240"/>
+          <text value="Download"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

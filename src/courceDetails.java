@@ -33,9 +33,9 @@ public class courceDetails extends JFrame {
       Sbutton.addActionListener(new ActionListener() {
          @Override
           public void actionPerformed(ActionEvent e) {
-                String studentId = textstudentid.getText();//pakooo method eka add karahan
-                if (!student_id.isEmpty()) {
-               getcourceDetails(student_id);
+                String studentId = User.getUserin();
+                if (!studentId.isEmpty()) {
+               getcourceDetails(studentId);
                }          }
        });
     }
