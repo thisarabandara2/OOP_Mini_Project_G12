@@ -13,7 +13,7 @@ public class Lectureupdate extends JFrame{
     private JTextArea textArea1;
     private JPanel Update;
     private JButton homeButton;
-    String user="Lec001";
+    String user=User.getUserin();
     Connection conn = null;
     public Lectureupdate() {
         setContentPane(Update);
