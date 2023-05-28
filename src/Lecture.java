@@ -19,7 +19,6 @@ public class Lecture extends JFrame{
         setTitle("Lecture");
         setBounds(600, 200, 600, 300);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         updateProfileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -58,13 +57,13 @@ public class Lecture extends JFrame{
         studentDetailsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                ViewStudent Vstu = new ViewStudent();
             }
         });
         noticesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                SeeNotices notice = new SeeNotices();
             }
         });
 

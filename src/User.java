@@ -80,6 +80,7 @@ public class User {
 
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT usertype FROM user where user_id ='"+userin+"'");
+            System.out.println(userin);
 
 
 
@@ -87,9 +88,10 @@ public class User {
                String type = rs.getString("usertype");
                if(type.equals("Student")){
                    Student std = new Student();
-                } else if (type == "Lecturer") {
-                    //Lecturer lec = new Lecturer(); add lecture part
-               } else if (type == "Technical officer") {
+                } else if (type.equals("Lecturer")) {
+                   System.out.println("run lecture");
+                   Lecture lec=new Lecture();
+               } else if (type.equals("Technical officer")) {
                     //TecOfficer tecofficer = new TecOfficer(); add technicle officer part
                 }
            }
