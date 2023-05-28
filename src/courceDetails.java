@@ -1,80 +1,75 @@
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class courceDetails extends JFrame {
 
     private JButton Sbutton;
     private JPanel pannel;
     private JTable table1;
+    private JButton registerCourseButton;
+    private JScrollPane scll;
 
     private PreparedStatement pst;
     private ResultSet rs;
     private Connection conn;
 
+
+    String studentId ;
+
+
     public courceDetails() {
+        setVisible(true);
+        add(pannel);
+        setTitle("Course Details");
+        setSize(750,650);
+
+
+
         DBConnect dbConnect = new DBConnect();
         try {
             conn = dbConnect.getConnection();
             if (conn == null) {
                 JOptionPane.showMessageDialog(null, "Failed to connect to the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
-                System.exit(0);
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Failed to connect to the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
-            System.exit(0);
         }
+        Sbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                studentId = User.getUserin();
+                getcourceDetails();
 
-      Sbutton.addActionListener(new ActionListener() {
-         @Override
-          public void actionPerformed(ActionEvent e) {
-                String studentId = User.getUserin();
-                if (!studentId.isEmpty()) {
-               getcourceDetails(studentId);
-               }          }
-       });
+//////////
+////////
+
+            }
+        });
+        registerCourseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StudentCourseRegister stu = new StudentCourseRegister();
+            }
+        });
+/////////////
     }
+    
 
-    private void getcourceDetails(String studentId) {
+    public void getcourceDetails() {
         try {
-            String sql = "SELECT student_id as Student ID, department_name as Department Name,course_id as Course ID,course_name as Course Name,course_credit as Course Credit FROM student WHERE student_id = ?";
+            String sql = "SELECT student_id , department_name ,course_id,course_name ,course_credit FROM student where student_id = '"+studentId+"'   ";
             pst = conn.prepareStatement(sql);
-            pst.setString(1, studentId);
-
             rs = pst.executeQuery();
 
-            DefaultTableModel model = new DefaultTableModel(
-                    new Object[]{"student_id","department_name", "course_id,course_name,course_credit"},
-                    0);
+            table1.setModel(DbUtils.resultSetToTableModel(rs));
 
-            // Add rows to the model
-            while (rs.next()) {
-                studentId = rs.getString("student_id");
-                String departmentName=rs.getString("department_name");
-                String courseId = rs.getString("course_id");
-                String courseName=rs.getString("course_name");
-                String courseCredit=rs.getString("courseCredit");
-
-                model.addRow(new Object[]{studentId, departmentName, courseId,courseName,courseCredit});
-            }
-
-            table1.setModel(model);
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
         }
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("courceDetails");
-        frame.setContentPane(new courceDetails().pannel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
     }
 }
