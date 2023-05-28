@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: May 27, 2023 at 12:25 PM
--- Server version: 5.7.36
--- PHP Version: 7.4.26
+-- Host: 127.0.0.1
+-- Generation Time: May 28, 2023 at 06:51 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,19 +27,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `attendance`
 --
 
-DROP TABLE IF EXISTS `attendance`;
-CREATE TABLE IF NOT EXISTS `attendance` (
+CREATE TABLE `attendance` (
   `attendance_id` varchar(15) NOT NULL,
   `date` date NOT NULL,
   `time` time(6) NOT NULL,
   `technical_officer_id` varchar(15) NOT NULL,
   `course_id` varchar(15) NOT NULL,
-  `student_id` varchar(10) NOT NULL,
-  PRIMARY KEY (`attendance_id`),
-  KEY `addattendance` (`technical_officer_id`),
-  KEY `Eligibility` (`course_id`),
-  KEY `takes_attendance` (`student_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `student_id` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -47,17 +42,15 @@ CREATE TABLE IF NOT EXISTS `attendance` (
 -- Table structure for table `course`
 --
 
-DROP TABLE IF EXISTS `course`;
-CREATE TABLE IF NOT EXISTS `course` (
+CREATE TABLE `course` (
   `course_id` varchar(15) NOT NULL,
   `course_name` varchar(225) NOT NULL,
   `course_credit` int(10) NOT NULL,
   `department` varchar(225) NOT NULL,
   `course_type` varchar(225) NOT NULL,
   `semester` varchar(225) NOT NULL,
-  `level` int(10) NOT NULL,
-  PRIMARY KEY (`course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `level` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `course`
@@ -76,17 +69,14 @@ INSERT INTO `course` (`course_id`, `course_name`, `course_credit`, `department`,
 -- Table structure for table `exam`
 --
 
-DROP TABLE IF EXISTS `exam`;
-CREATE TABLE IF NOT EXISTS `exam` (
+CREATE TABLE `exam` (
   `exam_id` varchar(15) NOT NULL,
   `exam_name` varchar(225) NOT NULL,
   `exam_hall` int(10) NOT NULL,
   `exam_type` varchar(225) NOT NULL,
   `course_id` varchar(15) NOT NULL,
-  `department_id` varchar(15) NOT NULL,
-  PRIMARY KEY (`exam_id`),
-  KEY `course_id` (`course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `department_id` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -94,19 +84,14 @@ CREATE TABLE IF NOT EXISTS `exam` (
 -- Table structure for table `lecture`
 --
 
-DROP TABLE IF EXISTS `lecture`;
-CREATE TABLE IF NOT EXISTS `lecture` (
+CREATE TABLE `lecture` (
   `lecture_id` varchar(5) NOT NULL,
   `lecture_post` varchar(225) NOT NULL,
   `department_name` varchar(50) NOT NULL,
   `user_id` varchar(15) NOT NULL,
   `course_id` varchar(15) NOT NULL,
-  `department_id` varchar(15) NOT NULL,
-  PRIMARY KEY (`lecture_id`),
-  KEY `user_type` (`user_id`),
-  KEY `course_id` (`course_id`),
-  KEY `department_id` (`department_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `department_id` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -114,8 +99,7 @@ CREATE TABLE IF NOT EXISTS `lecture` (
 -- Table structure for table `marks`
 --
 
-DROP TABLE IF EXISTS `marks`;
-CREATE TABLE IF NOT EXISTS `marks` (
+CREATE TABLE `marks` (
   `marks_id` varchar(15) NOT NULL,
   `grade` varchar(10) NOT NULL,
   `quizzes` int(10) NOT NULL,
@@ -124,11 +108,8 @@ CREATE TABLE IF NOT EXISTS `marks` (
   `final_exam` int(10) NOT NULL,
   `course_id` varchar(15) NOT NULL,
   `student_id` varchar(10) NOT NULL,
-  `lecture_id` varchar(5) NOT NULL,
-  PRIMARY KEY (`marks_id`),
-  KEY `course_id` (`course_id`),
-  KEY `lecture_id` (`lecture_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `lecture_id` varchar(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -156,7 +137,7 @@ CREATE TABLE `notice` (
   `no` int(10) NOT NULL,
   `title` varchar(225) NOT NULL,
   `date` varchar(40) NOT NULL,
-  `noticeFile` varchar(50) NOT NULL
+  `noticeFile` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
@@ -164,28 +145,8 @@ CREATE TABLE `notice` (
 --
 
 INSERT INTO `notice` (`no`, `title`, `date`, `noticeFile`) VALUES
-(7, 'asfghhh', '2023-05-28 00:59:32', 'notices/Renewal Payment TG750.pdf');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `notice`
---
-ALTER TABLE `notice`
-  ADD PRIMARY KEY (`no`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `notice`
---
-ALTER TABLE `notice`
-  MODIFY `no` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-COMMIT;
+(8, 'huihkjnjknjk', '2023-05-28 02:04:00', 'notices/Muruthawela.pdf'),
+(11, 'ede', '2023-05-28 10:07:14', 'sxe');
 
 -- --------------------------------------------------------
 
@@ -193,15 +154,12 @@ COMMIT;
 -- Table structure for table `student`
 --
 
-DROP TABLE IF EXISTS `student`;
-CREATE TABLE IF NOT EXISTS `student` (
+CREATE TABLE `student` (
   `student_id` varchar(10) NOT NULL,
   `department_name` int(11) NOT NULL,
   `user_id` varchar(15) NOT NULL,
-  `course_id` varchar(15) NOT NULL,
-  KEY `user_id` (`user_id`),
-  KEY `student_ibfk_2` (`course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `course_id` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -209,16 +167,12 @@ CREATE TABLE IF NOT EXISTS `student` (
 -- Table structure for table `technical_officer`
 --
 
-DROP TABLE IF EXISTS `technical_officer`;
-CREATE TABLE IF NOT EXISTS `technical_officer` (
+CREATE TABLE `technical_officer` (
   `technical_officer_id` varchar(15) NOT NULL,
   `department` varchar(225) NOT NULL,
   `user_id` varchar(15) NOT NULL,
-  `department_id` varchar(15) NOT NULL,
-  PRIMARY KEY (`technical_officer_id`),
-  KEY `user_id` (`user_id`),
-  KEY `department` (`department_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `department_id` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -226,9 +180,8 @@ CREATE TABLE IF NOT EXISTS `technical_officer` (
 -- Table structure for table `timetable`
 --
 
-DROP TABLE IF EXISTS `timetable`;
-CREATE TABLE IF NOT EXISTS `timetable` (
-  `refNo` varchar(20) UNIQUE NOT NULL,
+CREATE TABLE `timetable` (
+  `refNo` varchar(50) NOT NULL,
   `department` varchar(20) NOT NULL,
   `level` int(15) NOT NULL,
   `semester` int(15) NOT NULL,
@@ -236,7 +189,20 @@ CREATE TABLE IF NOT EXISTS `timetable` (
   `time` varchar(40) NOT NULL,
   `subject` varchar(40) NOT NULL,
   `file` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `timetable`
+--
+
+INSERT INTO `timetable` (`refNo`, `department`, `level`, `semester`, `day`, `time`, `subject`, `file`) VALUES
+('', 'ICT', 2, 1, 'Select', '', '', 'uploads/Muruthawela.pdf'),
+('', 'ICT', 1, 2, 'Monday', '12-2', 'english', ''),
+('', 'ICT', 1, 2, 'Monday', '12-2', 'english', ''),
+('ONLY FOR PDF', 'ICT', 1, 2, 'Monday', '12-2', 'english', ''),
+('ONLY FOR PDF', 'ICT', 1, 2, 'Monday', '12-2', 'englishIII', ''),
+('ONLY FOR PDF', 'ICT', 1, 2, 'Monday', '12-2', 'englishIIIIII', ''),
+('L1 SEM 2', 'ICT', 2, 2, 'Tuesday', '', '', 'wt4rtg4tf4t');
 
 -- --------------------------------------------------------
 
@@ -244,8 +210,7 @@ CREATE TABLE IF NOT EXISTS `timetable` (
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE `user` (
   `user_id` varchar(15) NOT NULL,
   `fname` varchar(225) NOT NULL,
   `lname` varchar(225) NOT NULL,
@@ -256,9 +221,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `usertype` varchar(20) NOT NULL,
   `department` varchar(20) NOT NULL,
   `adminid` varchar(20) NOT NULL,
-  `password` varchar(500) NOT NULL,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `password` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `user`
@@ -268,6 +232,86 @@ INSERT INTO `user` (`user_id`, `fname`, `lname`, `address`, `email`, `birthday`,
 ('tg731', 'Thisara', 'Bandara', 'Kandy', 'thisarabandara2@gmail.com', '2000.08.22', '0758228254', 'Student', 'ICT', '1', '123'),
 ('tg739', 'cc', 'cccc', 'ccc', 'ccc', 'cc', 'ccc55', 'Student', 'BST', '1', '12345'),
 ('tg750', 'asas', 'asasas', 'asasas', 'asasa', 'sasas', 'sasasas', 'Student', 'ET', 'a', 'javax.swing.plaf.basic.BasicTextUI$BasicCursor[Text Cursor]');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD PRIMARY KEY (`attendance_id`),
+  ADD KEY `addattendance` (`technical_officer_id`),
+  ADD KEY `Eligibility` (`course_id`),
+  ADD KEY `takes_attendance` (`student_id`);
+
+--
+-- Indexes for table `course`
+--
+ALTER TABLE `course`
+  ADD PRIMARY KEY (`course_id`);
+
+--
+-- Indexes for table `exam`
+--
+ALTER TABLE `exam`
+  ADD PRIMARY KEY (`exam_id`),
+  ADD KEY `course_id` (`course_id`);
+
+--
+-- Indexes for table `lecture`
+--
+ALTER TABLE `lecture`
+  ADD PRIMARY KEY (`lecture_id`),
+  ADD KEY `user_type` (`user_id`),
+  ADD KEY `course_id` (`course_id`),
+  ADD KEY `department_id` (`department_id`);
+
+--
+-- Indexes for table `marks`
+--
+ALTER TABLE `marks`
+  ADD PRIMARY KEY (`marks_id`),
+  ADD KEY `course_id` (`course_id`),
+  ADD KEY `lecture_id` (`lecture_id`);
+
+--
+-- Indexes for table `notice`
+--
+ALTER TABLE `notice`
+  ADD PRIMARY KEY (`no`);
+
+--
+-- Indexes for table `student`
+--
+ALTER TABLE `student`
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `student_ibfk_2` (`course_id`);
+
+--
+-- Indexes for table `technical_officer`
+--
+ALTER TABLE `technical_officer`
+  ADD PRIMARY KEY (`technical_officer_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `department` (`department_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `notice`
+--
+ALTER TABLE `notice`
+  MODIFY `no` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
