@@ -161,9 +161,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   `user_id` varchar(15) NOT NULL,
   `course_id` varchar(15) NOT NULL,
   `course_name` varchar(30) NOT NULL,
-  `course_credit` int(20) NOT NULL,
-  KEY `user_id` (`user_id`),
-  KEY `student_ibfk_2` (`course_id`)
+  `course_credit` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -350,12 +348,6 @@ ALTER TABLE `marks`
   ADD CONSTRAINT `marks_ibfk_3` FOREIGN KEY (`lecture_id`) REFERENCES `lecture` (`lecture_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `student`
---
-ALTER TABLE `student`
-  ADD CONSTRAINT `student_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `student_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
 --
 -- Constraints for table `technical_officer`
 --
