@@ -23,7 +23,6 @@ public class Attendance extends JFrame {
         setVisible(true);
         setTitle("Attendance");
         setSize(400, 350);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         DBConnect dbConnect = new DBConnect();
         try {

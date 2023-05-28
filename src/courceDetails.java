@@ -58,7 +58,7 @@ public class courceDetails extends JFrame {
         });
 /////////////
     }
-    
+
 
     public void getcourceDetails() {
         try {
