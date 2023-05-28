@@ -154,12 +154,17 @@ INSERT INTO `notice` (`no`, `title`, `date`, `noticeFile`) VALUES
 -- Table structure for table `student`
 --
 
-CREATE TABLE `student` (
+DROP TABLE IF EXISTS `student`;
+CREATE TABLE IF NOT EXISTS `student` (
   `student_id` varchar(10) NOT NULL,
-  `department_name` int(11) NOT NULL,
+  `department_name` varchar(20) NOT NULL,
   `user_id` varchar(15) NOT NULL,
-  `course_id` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `course_id` varchar(15) NOT NULL,
+  `course_name` varchar(30) NOT NULL,
+  `course_credit` int(20) NOT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `student_ibfk_2` (`course_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
