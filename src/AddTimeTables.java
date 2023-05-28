@@ -1,5 +1,6 @@
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,10 +44,11 @@ public class AddTimeTables extends JFrame {
     AddTimeTables(){
         add(panel5);
         setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
         setTitle("Add Time Tables" );
         setSize(600, 600);
 
+//Database Connectivity
 
         DBConnect dbConnect = new DBConnect();
         try {
@@ -60,9 +62,11 @@ public class AddTimeTables extends JFrame {
             System.exit(0);
         }
 
+//Database Connectivity
 
         tableget();
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         browseBtn.addActionListener(new ActionListener() {
             @Override
@@ -99,6 +103,8 @@ public class AddTimeTables extends JFrame {
             }
         });
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         jTable1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -106,6 +112,7 @@ public class AddTimeTables extends JFrame {
             }
         });
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         uploadBtn.addActionListener(new ActionListener() {
             @Override
@@ -120,17 +127,9 @@ public class AddTimeTables extends JFrame {
                 String choose = chooseBox.getText();
 
                 try {
-                    String sql = "INSERT INTO timetable (refNo, department, level, semester, day, time, subject, file) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-                    pst = conn.prepareStatement(sql);
-                    pst.setString(1, name);
-                    pst.setString(2, department);
-                    pst.setInt(3, level);
-                    pst.setInt(4, semester);
-                    pst.setString(5, day);
-                    pst.setString(6, time);
-                    pst.setString(7, subject);
-                    pst.setString(8, choose);
+                    String sql = "INSERT INTO timetable (refNo, department, level, semester, day, time, subject, file) VALUES ('" + name + "', '" + department + "', " + level + ", " + semester + ", '" + day + "', '" + time + "', '" + subject + "', '" + choose + "')";
 
+                    pst = conn.prepareStatement(sql);
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Inserted");
                     tableget();
@@ -141,40 +140,38 @@ public class AddTimeTables extends JFrame {
             }
         });
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         deleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int check = JOptionPane.showConfirmDialog(null, "Do you want to delete?");
-                if (check == 0) {
-                    String level = lelBox.getSelectedItem().toString();
-                    String department = depBox.getSelectedItem().toString();
-                    String semester = semBox.getSelectedItem().toString();
-                    String time = timeBox.getText();
-                    String day = dayBox.getSelectedItem().toString();
-                    String subject = subBox.getText();
+                JOptionPane.showConfirmDialog(null, "Do you want to delete?");
 
-                    try {
-                        String sql = "DELETE FROM timetable WHERE level = ? AND department = ? AND semester = ? AND time = ? AND day = ? AND subject = ?";
-                        pst = conn.prepareStatement(sql);
-                        pst.setString(1, level);
-                        pst.setString(2, department);
-                        pst.setString(3, semester);
-                        pst.setString(4, time);
-                        pst.setString(5, day);
-                        pst.setString(6, subject);
+                String level = lelBox.getSelectedItem().toString();
+                String department = depBox.getSelectedItem().toString();
+                String semester = semBox.getSelectedItem().toString();
+                String time = timeBox.getText();
+                String day = dayBox.getSelectedItem().toString();
+                String subject = subBox.getText();
 
-                        pst.executeUpdate();
-                        JOptionPane.showMessageDialog(null, "Deleted");
-                        clear();
-                    } catch (HeadlessException | NumberFormatException | SQLException ex) {
-                        JOptionPane.showMessageDialog(null, "Delete");
-                    }
+                try {
+                    String sql = "DELETE FROM timetable WHERE level = '" + level + "' AND department = '" + department + "' AND semester = '" + semester + "' AND time = '" + time + "' AND day = '" + day + "' AND subject = '" + subject + "'";
+                    pst = conn.prepareStatement(sql);
+
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Deleted");
+                    clear();
+                } catch (HeadlessException | NumberFormatException | SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Delete");
                 }
+
 
                 tableget();
             }
         });
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -185,18 +182,8 @@ public class AddTimeTables extends JFrame {
 
 
     }
-//    public void tableget() {
-//        try {
-//            String sql = "SELECT department, level, semester, day, time, subject, file FROM timetable";
-//            pst = conn.prepareStatement(sql);
-//            rs = pst.executeQuery();
-//
-//            jTable1.setModel(DbUtils.resultSetToTableModel(rs));
-//
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, e);
-//        }
-//    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void tableget() {
         try {
@@ -204,26 +191,15 @@ public class AddTimeTables extends JFrame {
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
 
-            DefaultTableModel model = new DefaultTableModel(
-                    new Object[]{"Department", "Level", "Semester", "Day", "Time", "Subject", "File"},
-                    0);
+            jTable1.setModel(DbUtils.resultSetToTableModel(rs));
 
-            while (rs.next()) {
-                String department = rs.getString("department");
-                int level = rs.getInt("level");
-                int semester = rs.getInt("semester");
-                String day = rs.getString("day");
-                String time = rs.getString("time");
-                String subject = rs.getString("subject");
-                String file = rs.getString("file");
-                model.addRow(new Object[]{department, level, semester, day, time, subject, file});
-            }
-
-            jTable1.setModel(model);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
     public void tabledata() {
@@ -247,10 +223,11 @@ public class AddTimeTables extends JFrame {
         }
     }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
     public void clear() {
-        refBox.setSelectedItem(null);
         lelBox.setSelectedItem(null);
         depBox.setSelectedItem(null);
         semBox.setSelectedItem(null);
@@ -262,4 +239,5 @@ public class AddTimeTables extends JFrame {
 
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

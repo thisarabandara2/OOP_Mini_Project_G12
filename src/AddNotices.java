@@ -1,5 +1,6 @@
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -36,7 +37,7 @@ public class AddNotices extends JFrame {
         add(panel3);
         setVisible(true);
         setTitle("Add Notices");
-        setSize(700, 500);
+        setSize(500, 600);
 
         DBConnect dbConnect = new DBConnect();
         try {
@@ -59,13 +60,12 @@ public class AddNotices extends JFrame {
                 String dateTime = getCurrentDateTime();  // Get the current date and time
 
                 try {
-                    String sql = "INSERT INTO notice (title, date, noticeFile) VALUES (?, ?, ?)";
+                    String sql = "INSERT INTO notice (title, date, noticeFile) VALUES ('"+name+"', '"+dateTime+"' , '"+choose+"')";
                     pst = conn.prepareStatement(sql);
-                    pst.setString(1, name);
-                    pst.setString(2, dateTime);
-                    pst.setString(3, choose);
                     pst.executeUpdate();
+
                     JOptionPane.showMessageDialog(null, "Inserted");
+
                     tableget();
                     titleBox.setText("");
                     chooseBox.setText("");
@@ -74,6 +74,8 @@ public class AddNotices extends JFrame {
                 }
             }
         });
+
+
         browseBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -111,16 +113,14 @@ public class AddNotices extends JFrame {
         deleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int check = JOptionPane.showConfirmDialog(null, "Do you want to delete?");
-                if (check == 0) {
+                JOptionPane.showConfirmDialog(null, "Do you want to delete?");
+
                     try {
                         String titlee = titleBox.getText();
                         String filename = chooseBox.getText();
 
-                        String sql = "DELETE FROM notice WHERE title = ? AND noticeFile = ?";
+                        String sql = "DELETE FROM notice WHERE title = '"+titlee+"' AND noticeFile = '"+filename+"'";
                         pst = conn.prepareStatement(sql);
-                        pst.setString(1, titlee);
-                        pst.setString(2, filename);
                         pst.executeUpdate();
 
                         JOptionPane.showMessageDialog(null, "Deleted");
@@ -130,8 +130,6 @@ public class AddNotices extends JFrame {
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(null, "Delete failed");
                     }
-
-                }
 
             }
         });
@@ -151,18 +149,18 @@ public class AddNotices extends JFrame {
     }
 
 
-//    public void tableget() {
-//        try {
-//            String sql = "SELECT title, date, noticeFile FROM notice";
-//            pst = conn.prepareStatement(sql);
-//            rs = pst.executeQuery();
-//
-//            noticeTable.setModel(DbUtils.resultSetToTableModel(rs));
-//
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, e);
-//        }
-//    }
+    public void tableget() {
+        try {
+            String sql = "SELECT title, date, noticeFile FROM notice";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            noticeTable.setModel(DbUtils.resultSetToTableModel(rs));
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
 
 
     public void tabledata() {
@@ -179,32 +177,7 @@ public class AddNotices extends JFrame {
 
 
 
-    public void tableget() {
-        try {
-            String sql = "SELECT title, date, noticeFile FROM notice";
-            pst = conn.prepareStatement(sql);
-            rs = pst.executeQuery();
 
-            // Create a DefaultTableModel with column names
-            DefaultTableModel model = new DefaultTableModel(
-                    new Object[]{"Title", "Date", "File"},
-                    0);
-
-            // Add rows to the model
-            while (rs.next()) {
-                String title = rs.getString("title");
-                String date = rs.getString("date");
-                String file = rs.getString("noticeFile");
-                model.addRow(new Object[]{title, date, file});
-            }
-
-            // Set the model to the JTable
-            noticeTable.setModel(model);
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
 
 
 
