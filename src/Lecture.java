@@ -34,14 +34,14 @@ public class Lecture extends JFrame{
         courseMaterealButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+            AddMaterials met = new AddMaterials();
             }
         });
         MarksButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    InsertMarks marks=new InsertMarks();
+                    Marks marks=new Marks();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -57,7 +57,7 @@ public class Lecture extends JFrame{
         studentDetailsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ViewStudent Vstu = new ViewStudent();
+                ViewStudents Vstu = new ViewStudents();
             }
         });
         noticesButton.addActionListener(new ActionListener() {

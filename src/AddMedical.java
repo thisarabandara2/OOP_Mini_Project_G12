@@ -1,17 +1,18 @@
 import com.toedter.calendar.JDateChooser;
+import net.proteanit.sql.DbUtils;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,39 +28,31 @@ public class AddMedical extends JFrame {
     private JTextField chooseBox;
     private JButton browseBtn;
     private JButton submitBtn;
+    private JTextField subBox;
+    private JButton deleteButton;
+    private JTable table1;
+    private JButton searchButton;
+
 
 
     private PreparedStatement pst;
     private Connection conn;
+    private ResultSet rs;
 
     JDateChooser date1 = new JDateChooser();
     JDateChooser date2 = new JDateChooser();
 
-    public class DBConnect {
-        private static final String DB_URL = "jdbc:mysql://localhost:3306/Teclms";
-        private static final String DB_USERNAME = "root";
-        private static final String DB_PASSWORD = "";
 
-        public Connection getConnection() throws SQLException {
-            Connection connection = null;
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            return connection;
-        }
-    }
+
 
     public AddMedical() {
         setVisible(true);
         add(pannel4);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(450, 400);
+        setSize(800, 400);
 
         starpannel.add(date1);
         endpannel.add(date2);
+
 
         DBConnect dbConnect = new DBConnect();
         try {
@@ -76,13 +69,13 @@ public class AddMedical extends JFrame {
         submitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Get the selected values
                 String tg = tgBox.getText();
                 String level = lelBox.getSelectedItem().toString();
                 String semester = semBox.getSelectedItem().toString();
                 java.util.Date startDate = date1.getDate();
                 java.util.Date endDate = date2.getDate();
                 String medFile = chooseBox.getText();
+                String subjects = subBox.getText();
 
                 if (startDate != null && endDate != null) {
                     long difference = Math.abs(endDate.getTime() - startDate.getTime());
@@ -93,21 +86,10 @@ public class AddMedical extends JFrame {
                         return;
                     }
 
-
-                    String subjects = "";
-
-
                     try {
-                        String sql = "INSERT INTO medical (tg, level, semester, start_date, end_date, subjects, medFile) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                        pst = conn.prepareStatement(sql);
-                        pst.setString(1, tg);
-                        pst.setString(2, level);
-                        pst.setString(3, semester);
-                        pst.setString(4, startDate.toString());
-                        pst.setString(5, endDate.toString());
-                        pst.setString(6, subjects);
-                        pst.setString(7, medFile);
-                        pst.executeUpdate();
+                        String sql = "INSERT INTO medical (tg, level, semester, start_date, end_date, subjects, medFile) VALUES ('" + tg + "', '" + level + "', '" + semester + "', '" + startDate + "', '" + endDate + "', '" + subjects + "', '" + medFile + "')";
+                        Statement stmt = conn.createStatement();
+                        stmt.executeUpdate(sql);
 
                         JOptionPane.showMessageDialog(null, "Data inserted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
                     } catch (SQLException ex) {
@@ -153,10 +135,101 @@ public class AddMedical extends JFrame {
                 }
             }
         });
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getMedDetails();
+            }
+        });
+
+
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showConfirmDialog(null, "Do you want to delete?");
+
+                String tgg = tgBox.getText();
+                String level = lelBox.getSelectedItem().toString();
+
+                String semester = semBox.getSelectedItem().toString();
+
+               String subject = subBox.getText();
+               String med = chooseBox.getText();
+
+                try {
+                    String sql = "DELETE FROM medical  WHERE tg= '"+tgg+"' AND level = '" + level + "' AND semester = '" + semester + "' AND subjects = '" + subject + "' AND medFile='"+med+"' ";
+                    pst = conn.prepareStatement(sql);
+
+                    pst.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Deleted");
+                    clear();
+                } catch (HeadlessException | NumberFormatException | SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Delete");
+                }
+
+
+                 getMedDetails();
+            }
+
+        });
+
+
+        table1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                 tabledata();
+            }
+        });
     }
 
-    public static void main(String[] args) {
-        AddMedical med = new AddMedical();
+    public void getMedDetails() {
+        try {
+
+            String tg = tgBox.getText();
+            String sql = "SELECT * FROM medical where tg = '"+tg+"'   ";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            table1.setModel(DbUtils.resultSetToTableModel(rs));
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
+
+
+    public void clear() {
+
+        lelBox.setSelectedItem(null);
+
+        semBox.setSelectedItem(null);
+        chooseBox.setText("");
+        date1.setDate(null);
+        date2.setDate(null);
+
+        subBox.setText("");
+    }
+
+
+
+    public void tabledata() {
+        int selectedRow = table1.getSelectedRow();
+
+        String tg = table1.getValueAt(selectedRow, 0).toString();
+            String level = table1.getValueAt(selectedRow, 1).toString();
+            String semester = table1.getValueAt(selectedRow, 2).toString();
+
+            String subject= table1.getValueAt(selectedRow, 5).toString();
+
+
+        tgBox.setText(tg);
+            lelBox.setSelectedItem(level);
+            semBox.setSelectedItem(semester);
+
+            subBox.setText(subject);
+
+
+    }
+
 }
 

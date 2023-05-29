@@ -28,7 +28,7 @@ public class editProfile extends JFrame {
          add(panel);
 
 
-        userId = userId;// add karapan hutto method eka
+        userId = User.getUserin();
         DBConnect dbConnect = new DBConnect();
         try {
             conn = dbConnect.getConnection();

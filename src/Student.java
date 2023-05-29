@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -21,6 +22,7 @@ public class Student extends JFrame {
     private JButton editProfileButton;
     private JLabel fullname;
     private JButton MYATTENDANCEButton;
+    private JPanel proPannel;
 
     public Student() {
         setVisible(true);
@@ -30,6 +32,11 @@ public class Student extends JFrame {
         add(Student);
 
         showProfileDetails();
+
+
+
+
+
 
 
         logOutButton.addActionListener(new ActionListener() {
@@ -53,7 +60,7 @@ public class Student extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                editProfile edit = new editProfile();
+                Updatestudent update = new Updatestudent();
             }
         });
         MYATTENDANCEButton.addActionListener(new ActionListener() {
@@ -84,12 +91,14 @@ public class Student extends JFrame {
         String password = "";
 
 
+
         try {
             Connection con = DriverManager.getConnection(url, user, password);
             //System.out.println("Connected to the MySQL database");
 
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM user where user_id ='"+username+"'");
+
 
 
 
@@ -106,9 +115,18 @@ public class Student extends JFrame {
                 email.setText(Email);
                 setName(fname,lname);
 
+
+                String filePath = rs.getString("profile_picture");
+                ImageIcon imageIcon = new ImageIcon(filePath);
+                Image originalImage = imageIcon.getImage();
+                Image resizedImage = originalImage.getScaledInstance(200, 220, Image.SCALE_SMOOTH);
+                ImageIcon resizedIcon = new ImageIcon(resizedImage);
+                profilepicture.setIcon(resizedIcon);
+
+
             }
 
-            con.close();
+
             //System.out.println("Connection closed");
         } catch (SQLException e) {
             System.out.println("error pass here");

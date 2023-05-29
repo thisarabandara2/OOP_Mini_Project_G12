@@ -60,8 +60,7 @@ public class ViewCourse extends JFrame {
                     JOptionPane.showMessageDialog(null,
                             "Course Deleted Successfully  !!");
 
-
-                    con.close();
+                    
                     //System.out.println("Connection closed");
                 } catch (SQLException a) {
                     System.err.println("Error connecting to the database: " + a.getMessage());

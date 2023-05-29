@@ -4,11 +4,14 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Updatestudent extends JFrame{
     private JTextField textaddress;
@@ -16,14 +19,18 @@ public class Updatestudent extends JFrame{
     private JTextField textnumber;
     private JButton UPLOADButton;
     private JButton UPDATEButton;
-    private JLabel profilePicturelabel;
+
     private JPanel panel;
+    private JTextField textupload;
 
     private PreparedStatement pst;
     private ResultSet rs;
     private Connection conn;
     private String userId;
-    private String profilePicturePath = "";
+      String profilePicturePath  ;
+    String address;
+    String email ;
+    String number;
 
 
     public Updatestudent() {
@@ -32,7 +39,7 @@ public class Updatestudent extends JFrame{
         setTitle("EditProfileDetails");
         add(panel);
 
-        userId = userId;//add method
+        userId = User.getUserin();
         DBConnect dbConnect = new DBConnect();
         try {
             conn = dbConnect.getConnection();
@@ -49,11 +56,12 @@ public class Updatestudent extends JFrame{
         UPDATEButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String address = textaddress.getText();
-                String email = textemail.getText();
-                String number = textnumber.getText();
+                address = textaddress.getText();
+                email = textemail.getText();
+                number = textnumber.getText();
+                profilePicturePath = textupload.getText();
                 if (!address.isEmpty() && !email.isEmpty() && !number.isEmpty()) {
-                    Updatestudent(address, email, number);
+                    Updatestudent(address, email, number,profilePicturePath);
                 } else {
                     JOptionPane.showMessageDialog(null, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -65,37 +73,49 @@ public class Updatestudent extends JFrame{
         UPLOADButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                int returnValue = fileChooser.showOpenDialog(null);
-                if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    String extension = getFileExtension(selectedFile.getName());
-                    if (extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png")) {
-                        String destinationPath = "profile_pictures/" + userId + "." + extension;
-                        try {
-                            Files.copy(selectedFile.toPath(), new File(destinationPath).toPath(), StandardCopyOption.REPLACE_EXISTING);
-                            profilePicturePath = destinationPath;
-                            ImageIcon imageIcon = new ImageIcon(profilePicturePath);
-                            profilePicturelabel.setIcon(imageIcon);
-                        } catch (IOException ex) {
-                            JOptionPane.showMessageDialog(null, "Failed to upload profile picture.", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Invalid file format. Please upload an image (jpg, jpeg, or png).", "Error", JOptionPane.ERROR_MESSAGE);
+                try {
+                    JFileChooser chooser = new JFileChooser();
+                    chooser.showOpenDialog(null);
+                    File f = chooser.getSelectedFile();
+                    String filename = f.getAbsolutePath();
+
+                    Path pathAbsolute = f.toPath();
+                    Path pathBase = Paths.get("").toAbsolutePath();
+                    Path pathRelative = pathBase.relativize(pathAbsolute);
+                    String relativePath = pathRelative.toString().replace(File.separator, "/");
+                    textupload.setText("profile/" + f.getName());
+
+                    String newPath = "profile/";
+                    File directory = new File(newPath);
+                    if (!directory.exists()) {
+                        directory.mkdir();
                     }
+
+                    File sourceFile = new File(filename);
+                    String extension = filename.substring(filename.lastIndexOf('.') + 1);
+                    String newName = f.getName();
+
+                    File destinationFile = new File(newPath + newName);
+
+                    Files.copy(sourceFile.toPath(), destinationFile.toPath());
+                } catch (IOException ex) {
+                    Logger.getLogger(AddTimeTables.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        });
-        getProfileDetails();
+        });        //getProfileDetails();
     }
-    private void Updatestudent(String address, String email, String number) {
+    private void Updatestudent(String address, String email, String number, String profilePicturePath) {
         try {
+
+
+
+
             String sql = "UPDATE user SET address = ?, email = ?, contactnumber = ?, profile_picture = ? WHERE user_id = ?";
             pst = conn.prepareStatement(sql);
-            pst.setString(1, address);
-            pst.setString(2, email);
-            pst.setString(3, number);
-            pst.setString(4, profilePicturePath);
+            pst.setString(1, this.address);
+            pst.setString(2, this.email);
+            pst.setString(3, this.number);
+            pst.setString(4, this.profilePicturePath);
             pst.setString(5, userId);
             int rowsAffected = pst.executeUpdate();
 
@@ -109,38 +129,7 @@ public class Updatestudent extends JFrame{
         }
     }
 
-    private void getProfileDetails() {
-        try {
-            String sql = "SELECT * FROM user WHERE user_id = ?";
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, userId);
-            rs = pst.executeQuery();
 
-            while (rs.next()) {
-                String address = rs.getString("address");
-                String email = rs.getString("email");
-                String number = rs.getString("number");
 
-                textaddress.setText(address);
-                textemail.setText(email);
-                textnumber.setText(number);
-
-                String profilePictureFilename = userId + getFileExtension(rs.getString("profile_picture"));
-                profilePicturePath = "profile_pictures/" + profilePictureFilename;
-                ImageIcon imageIcon = new ImageIcon(profilePicturePath);
-                profilePicturelabel.setIcon(imageIcon);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        }
-    }
-    private String getFileExtension(String filename) {
-        int dotIndex = filename.lastIndexOf(".");
-        if (dotIndex > 0 && dotIndex < filename.length() - 1) {
-            return filename.substring(dotIndex + 1).toLowerCase();
-        } else {
-            return "";
-        }
-    }
     
 }

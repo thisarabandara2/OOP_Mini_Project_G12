@@ -91,8 +91,8 @@ public class User {
                 } else if (type.equals("Lecturer")) {
                    System.out.println("run lecture");
                    Lecture lec=new Lecture();
-               } else if (type.equals("Technical officer")) {
-                    //TecOfficer tecofficer = new TecOfficer(); add technicle officer part
+               } else if (type.equals("Technical Officer")) {
+                    TechnicaOfficer tec = new TechnicaOfficer();
                 }
            }
 
