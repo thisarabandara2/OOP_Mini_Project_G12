@@ -19,7 +19,7 @@ public class courceDetails extends JFrame {
     private Connection conn;
 
 
-    String studentId ;
+    String studentId = User.getUserin();;
 
 
     public courceDetails() {
@@ -27,6 +27,7 @@ public class courceDetails extends JFrame {
         add(pannel);
         setTitle("Course Details");
         setSize(750,650);
+
 
 
 
@@ -39,20 +40,23 @@ public class courceDetails extends JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Failed to connect to the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
         }
-        Sbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                studentId = User.getUserin();
-                getcourceDetails();
 
-
-
-
-            }
-        });
+        getcourceDetails();
+//        Sbutton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                studentId = User.getUserin();
+//                getcourceDetails();
+//
+//
+//
+//
+//            }
+//        });
         registerCourseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                dispose();
                 StudentCourseRegister stu = new StudentCourseRegister();
             }
         });

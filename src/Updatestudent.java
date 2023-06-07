@@ -62,9 +62,13 @@ public class Updatestudent extends JFrame{
                 profilePicturePath = textupload.getText();
                 if (!address.isEmpty() && !email.isEmpty() && !number.isEmpty()) {
                     Updatestudent(address, email, number,profilePicturePath);
+                    new Student();
+                    dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+
+
 
             }
         });

@@ -26,7 +26,7 @@ public class Attendance extends JFrame {
         add(pannel);
         setVisible(true);
         setTitle("Attendance");
-        setSize(400, 350);
+        setSize(700, 500);
 
         DBConnect dbConnect = new DBConnect();
         try {

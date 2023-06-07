@@ -20,6 +20,7 @@ public class CreateCourse extends JFrame {
     private JButton backButton;
     private JPanel Course;
     private JLabel arrowimage;
+    private JComboBox comboBoxgpa;
 
     CreateCourse(){
         setVisible(true);
@@ -46,6 +47,7 @@ public class CreateCourse extends JFrame {
                     String cDep = comboBoxDepartment.getSelectedItem().toString();
                     String cSemester = comboBoxSemester.getSelectedItem().toString();
                     int cLevel = Integer.parseInt(comboBoxLevel.getSelectedItem().toString());
+                    String gpastatus = comboBoxgpa.getSelectedItem().toString();
                     String cType;
 
 
@@ -65,8 +67,8 @@ public class CreateCourse extends JFrame {
                         //System.out.println("Connected to the MySQL database");
 
                         Statement stmt = con.createStatement();
-                        stmt.executeUpdate("INSERT INTO course (`course_id`, `course_name`, `course_credit`, `department`, `course_type`, `semester`, `level`) VALUES " +
-                                "('"+cId+"', '"+cName+"', '"+cCredit+"', '"+cDep+"', '"+cType+"', '"+cSemester+"', '"+cLevel+"'); ");
+                        stmt.executeUpdate("INSERT INTO course (`course_id`, `course_name`, `course_credit`, `department`, `course_type`, `semester`, `level`,`gpastatus`) VALUES " +
+                                "('"+cId+"', '"+cName+"', '"+cCredit+"', '"+cDep+"', '"+cType+"', '"+cSemester+"', '"+cLevel+"' , '"+gpastatus+"'); ");
                         JOptionPane.showMessageDialog(null,
                                 "Course Detail Successfully added !!");
 

@@ -23,6 +23,7 @@ public class Student extends JFrame {
     private JLabel fullname;
     private JButton MYATTENDANCEButton;
     private JPanel proPannel;
+    private JButton MYMEDICLESButton;
 
     public Student() {
         setVisible(true);
@@ -59,7 +60,7 @@ public class Student extends JFrame {
         editProfileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                dispose();
                 Updatestudent update = new Updatestudent();
             }
         });
@@ -79,6 +80,12 @@ public class Student extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SeeTimeTables table = new SeeTimeTables();
+            }
+        });
+        MYMEDICLESButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Viewstmedical medi = new Viewstmedical();
             }
         });
     }
