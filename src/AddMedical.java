@@ -32,7 +32,7 @@ public class AddMedical extends JFrame {
     private JButton deleteButton;
     private JTable table1;
     private JButton searchButton;
-
+    private JButton updateBtn;
 
 
     private PreparedStatement pst;
@@ -77,6 +77,8 @@ public class AddMedical extends JFrame {
                 String medFile = chooseBox.getText();
                 String subjects = subBox.getText();
 
+
+
                 if (startDate != null && endDate != null) {
                     long difference = Math.abs(endDate.getTime() - startDate.getTime());
                     long daysDifference = TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS);
@@ -87,9 +89,12 @@ public class AddMedical extends JFrame {
                     }
 
                     try {
+
                         String sql = "INSERT INTO medical (tg, level, semester, start_date, end_date, subjects, medFile) VALUES ('" + tg + "', '" + level + "', '" + semester + "', '" + startDate + "', '" + endDate + "', '" + subjects + "', '" + medFile + "')";
                         Statement stmt = conn.createStatement();
                         stmt.executeUpdate(sql);
+
+
 
                         JOptionPane.showMessageDialog(null, "Data inserted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
                     } catch (SQLException ex) {
@@ -159,9 +164,9 @@ public class AddMedical extends JFrame {
                 try {
                     String sql = "DELETE FROM medical  WHERE tg= '"+tgg+"' AND level = '" + level + "' AND semester = '" + semester + "' AND subjects = '" + subject + "' AND medFile='"+med+"' ";
                     pst = conn.prepareStatement(sql);
-
                     pst.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Deleted");
+
+                //    JOptionPane.showMessageDialog(null, "Deleted");
                     clear();
                 } catch (HeadlessException | NumberFormatException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Delete");
@@ -178,6 +183,34 @@ public class AddMedical extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                  tabledata();
+            }
+        });
+
+
+        updateBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String tg = tgBox.getText();
+                String level = lelBox.getSelectedItem().toString();
+                String semester = semBox.getSelectedItem().toString();
+                java.util.Date startDate = date1.getDate();
+                java.util.Date endDate = date2.getDate();
+                String medFile = chooseBox.getText();
+                String subjects = subBox.getText();
+
+
+                try {
+                    String updateSql = "UPDATE medical SET level = '"+level+"', semester = '"+semester+"', start_date= '"+startDate+"', end_date = '"+endDate+"' , subjects = '"+subjects+"', medFile ='"+medFile+"'  WHERE tg = '"+tg+"'";
+                    PreparedStatement pstmt = conn.prepareStatement(updateSql);
+                    pstmt.executeUpdate();
+
+                    JOptionPane.showMessageDialog(null, "Data updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Failed to update data in the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
+                }
+                getMedDetails();
+
             }
         });
     }
@@ -231,5 +264,8 @@ public class AddMedical extends JFrame {
 
     }
 
+
 }
+
+
 
