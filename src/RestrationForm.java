@@ -2,10 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.sql.*;
 
 public class RestrationForm extends JDialog {
     private static JFrame parent;
@@ -24,6 +21,7 @@ public class RestrationForm extends JDialog {
     private JTextField tfdepartment;
     private JComboBox comboBox1;
     private JComboBox comboBoxDep;
+    private JButton updateButton;
 
     public RestrationForm(JFrame parent) {
         super(parent);
@@ -49,6 +47,7 @@ public class RestrationForm extends JDialog {
         });
 
         setVisible(true);
+
     }
 
     private void registerUser() {
@@ -94,6 +93,7 @@ public class RestrationForm extends JDialog {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     Users user;
 
@@ -148,6 +148,9 @@ public class RestrationForm extends JDialog {
         return user;
     }
 
+
+
+
     public static void main(String[] args) {
         RestrationForm myForm = new RestrationForm(null);
         Users user = myForm.user;
@@ -159,3 +162,5 @@ public class RestrationForm extends JDialog {
     }
 
 }
+
+

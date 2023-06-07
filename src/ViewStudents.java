@@ -1,3 +1,5 @@
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
@@ -21,7 +23,7 @@ public class ViewStudents extends JFrame {
         add(myPanel);
         setVisible(true);
         setTitle("Student Details");
-        setSize(400, 350);
+        setSize(1000, 500);
 
         DBConnect dbConnect = new DBConnect();
         try {
@@ -48,26 +50,12 @@ public class ViewStudents extends JFrame {
 
     private void getStudentDetails(String studentId) {
         try {
-            String sql = "SELECT * FROM student WHERE student_id = ?";
+            String sql = "SELECT fname as 'First name',lname as 'Last name',address,email,birthday,contactnumber,department FROM user WHERE user_id = ?";
             pst = conn.prepareStatement(sql);
             pst.setString(1, studentId);
             rs = pst.executeQuery();
 
-            DefaultTableModel model = new DefaultTableModel(
-                    new Object[]{"student_id", "department_name", "user_id", "course_id", "exam_id"},
-                    0);
-
-            // Add rows to the model
-            while (rs.next()) {
-                String id = rs.getString("student_id");
-                String dep_name = rs.getString("department_name");
-                String user_id = rs.getString("user_id");
-                String course_id = rs.getString("course_id");
-                String exam_id = rs.getString("exam_id");
-                model.addRow(new Object[]{id, dep_name, user_id, course_id, exam_id});
-            }
-
-            myTable.setModel(model);
+            myTable.setModel(DbUtils.resultSetToTableModel(rs));
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);

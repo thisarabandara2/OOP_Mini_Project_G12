@@ -91,7 +91,6 @@ public class editProfile extends JFrame {
                     new Object[]{"User ID", "First Name", "Last Name", "Password"},
                     0);
 
-            // Add rows to the model
             while (rs.next()) {
                 String userID = rs.getString("user_id");
                 String firstName = rs.getString("fname");

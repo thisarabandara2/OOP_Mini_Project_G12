@@ -45,8 +45,8 @@ public class courceDetails extends JFrame {
                 studentId = User.getUserin();
                 getcourceDetails();
 
-//////////
-////////
+
+
 
             }
         });
@@ -56,7 +56,7 @@ public class courceDetails extends JFrame {
                 StudentCourseRegister stu = new StudentCourseRegister();
             }
         });
-/////////////
+
     }
 
 

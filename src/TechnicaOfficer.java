@@ -14,7 +14,7 @@ public class TechnicaOfficer extends JFrame {
 
         setVisible(true);
         setTitle("Technical Officer");
-        setSize(400,600);
+        setSize(1000,800);
         add(panel);
 
         NOTICEButton.addActionListener(new ActionListener() {
