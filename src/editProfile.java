@@ -1,3 +1,5 @@
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
@@ -87,19 +89,7 @@ public class editProfile extends JFrame {
             pst.setString(1, userId);
             rs = pst.executeQuery();
 
-            DefaultTableModel model = new DefaultTableModel(
-                    new Object[]{"User ID", "First Name", "Last Name", "Password"},
-                    0);
-
-            while (rs.next()) {
-                String userID = rs.getString("user_id");
-                String firstName = rs.getString("fname");
-                String lastName = rs.getString("lname");
-                String password = rs.getString("password");
-                model.addRow(new Object[]{userID, firstName, lastName, password});
-            }
-
-            table1.setModel(model);
+            table1.setModel(DbUtils.resultSetToTableModel(rs));
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);

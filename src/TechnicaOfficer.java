@@ -32,7 +32,7 @@ public class TechnicaOfficer extends JFrame {
         ADDANDMAINTAINATTENDANCEButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //add attendance part
+                Addattendance add = new Addattendance();
             }
         });
         UPDATEPROFILEButton.addActionListener(new ActionListener() {

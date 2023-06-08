@@ -8,7 +8,6 @@ import java.sql.*;
 
 public class courceDetails extends JFrame {
 
-    private JButton Sbutton;
     private JPanel pannel;
     private JTable table1;
     private JButton registerCourseButton;
@@ -42,17 +41,7 @@ public class courceDetails extends JFrame {
         }
 
         getcourceDetails();
-//        Sbutton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                studentId = User.getUserin();
-//                getcourceDetails();
-//
-//
-//
-//
-//            }
-//        });
+
         registerCourseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

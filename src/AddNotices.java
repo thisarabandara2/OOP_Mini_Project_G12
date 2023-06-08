@@ -37,7 +37,7 @@ public class AddNotices extends JFrame {
         add(panel3);
         setVisible(true);
         setTitle("Add Notices");
-        setSize(500, 600);
+        setSize(750, 650);
 
         DBConnect dbConnect = new DBConnect();
         try {

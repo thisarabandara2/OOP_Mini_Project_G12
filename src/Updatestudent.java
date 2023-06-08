@@ -22,6 +22,7 @@ public class Updatestudent extends JFrame{
 
     private JPanel panel;
     private JTextField textupload;
+    private JButton backButton;
 
     private PreparedStatement pst;
     private ResultSet rs;
@@ -35,7 +36,7 @@ public class Updatestudent extends JFrame{
 
     public Updatestudent() {
         setVisible(true);
-        setSize(750,450);
+        setSize(500,600);
         setTitle("EditProfileDetails");
         add(panel);
 
@@ -107,6 +108,13 @@ public class Updatestudent extends JFrame{
                 }
             }
         });        //getProfileDetails();
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new Student();
+            }
+        });
     }
     private void Updatestudent(String address, String email, String number, String profilePicturePath) {
         try {

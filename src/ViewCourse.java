@@ -57,6 +57,7 @@ public class ViewCourse extends JFrame {
                 try {
                     Statement stmt = con.createStatement();
                     stmt.executeUpdate("delete from course where course_id = '"+CourseID+"';");
+                    stmt.executeUpdate("delete from student where course_id = '"+CourseID+"';");
                     JOptionPane.showMessageDialog(null,
                             "Course Deleted Successfully  !!");
 

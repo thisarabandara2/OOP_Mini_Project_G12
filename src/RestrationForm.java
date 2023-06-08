@@ -21,13 +21,12 @@ public class RestrationForm extends JDialog {
     private JTextField tfdepartment;
     private JComboBox comboBox1;
     private JComboBox comboBoxDep;
-    private JButton updateButton;
 
     public RestrationForm(JFrame parent) {
         super(parent);
         setTitle("Create a new account");
         setContentPane(registerPanel);
-        setMinimumSize(new Dimension(450, 474));
+        setMinimumSize(new Dimension(500, 700));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -85,7 +84,7 @@ public class RestrationForm extends JDialog {
         if (user != null) {
             JOptionPane.showMessageDialog(this,
                     "User Successfully Registered!!");
-                    // Add setTex null
+
         } else {
             JOptionPane.showMessageDialog(this,
                     "Failed to register new user",
@@ -105,7 +104,7 @@ public class RestrationForm extends JDialog {
 
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            // Connected to database successfully...
+
 
             Statement stmt = conn.createStatement();
             String sql = "INSERT INTO user (user_id, fname, lname, address, email, birthday, contactnumber, usertype,department, adminid, password) " +

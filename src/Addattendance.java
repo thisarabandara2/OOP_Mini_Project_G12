@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Addattendance{
+public class Addattendance extends JFrame{
     private JTextField Stuidtext;
     private JTextField subidtext;
     private JTextField starttimetext;
@@ -13,10 +13,16 @@ public class Addattendance{
     private JButton deleteButton;
     private JLabel date;
     private JLabel gjf;
+    private JPanel add;
     private String tecofficerID="saman";
     DBConnector database=new DBConnector();
     String query="";
-    public Attendance() {
+    public Addattendance() {
+
+        setVisible(true);
+        setSize(450,350);
+        add(add);
+        setContentPane(add);
     addButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -33,7 +39,7 @@ public class Addattendance{
                     JOptionPane.showMessageDialog(null, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 else{
-                    query="insert into attendance value(studentid,subjectId,tecofficerID,startTime,date,endTime)";
+                    query="insert into attendance (date,time,technical_officer_id,course_id,student_id,end_time) values ('"+date+"','"+startTime+"','"+User.getUserin()+"','"+subjectId+"','"+studentId+"','"+endTime+"');";
                     database.writeData(query);
                 }
             }catch (Exception ex) {
