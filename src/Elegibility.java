@@ -3,7 +3,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Elegibility {
+public class Elegibility{
     DBConnector db=new DBConnector();
     Connection conn= db.getConnection();
     Statement stmt = conn.createStatement();
@@ -20,8 +20,9 @@ String query="";
         }
         int totaldays=0;
         int presentdays=0;
-        int approvemedical=0;
-        int total=0;
+        int approvemedical;
+        int total;
+        String status;
         switch (sub){
             case "practical":
                 query = "SELECT COUNT(*) AS total FROM attendance WHERE course_id = '"+subject+"'";
@@ -32,8 +33,13 @@ String query="";
                 query = "SELECT COUNT(*) AS total FROM medical WHERE course_id = '"+subject+"' and student_id='"+studentid+"'";
                 approvemedical=presentdays(query);
                 total=(presentdays+approvemedical)*100/totaldays;
-
-                query = "INSERT INTO attendancepercentage (subject_id, student_id, practical, total,with_medicalpractical,with medical total) VALUES ('" + subject + "', '" + studentid + "', " + theoryAttendance + ", " + theoryAttendance +"', " + total + ", " + total + ")";
+                if(total>=80){
+                    status="Eligibal";
+                }
+                else{
+                    status="Not Eligibal";
+                }
+                query = "INSERT INTO attendancepercentage (subject_id, student_id, practical, total,with_medicalpractical,with medical total,elegibal) VALUES ('" + subject + "', '" + studentid + "', " + theoryAttendance + ", " + theoryAttendance +"', " + total + ", " + total +", " + status + ")";
                 db.writeData(query);
 
                 break;
@@ -48,8 +54,13 @@ String query="";
                 query = "SELECT COUNT(*) AS total FROM medical WHERE course_id = '"+subject+"' and student_id='"+studentid+"'";
                 approvemedical=presentdays(query);
                 total=(presentdays+approvemedical)*100/totaldays;
-
-                query = "INSERT INTO attendancepercentage (subject_id, student_id, theory, total,with_medicaltheory,with medical total) VALUES ('" + subject + "', '" + studentid + "', " + practicalAttendance + ", " + practicalAttendance + "', " +total + ", " + total + ")";
+                if(total>=80){
+                    status="Eligibal";
+                }
+                else{
+                    status="Not Eligibal";
+                }
+                query = "INSERT INTO attendancepercentage (subject_id, student_id, theory, total,with_medicaltheory,with medical total,elegibal) VALUES ('" + subject + "', '" + studentid + "', " + practicalAttendance + ", " + practicalAttendance + "', " +total + ", " + total + ", " + status+ ")";
                 db.writeData(query);
                 break;
             case "both":
@@ -73,7 +84,13 @@ String query="";
                 approvemedical=presentdays(query);
               int  totalprac=(presentdays+approvemedical)*100/totaldays;
                 int totalmedi=(totaltheory+totalprac)/2;
-                query ="INSERT INTO attendancepercentage (subject_id, student_id, theory,practical, total,with_medicaltheory,with_medicalpractical,with medical total) VALUES ('" + subject + "', '" + studentid + "', " + theorypersentage + "," + practicalpersentage + "," + totalattendance +"', " + totaltheory + "," + totalprac + "," + totalmedi + ")";
+                if(totalmedi>=80){
+                    status="Eligibal";
+                }
+                else{
+                    status="Not Eligibal";
+                }
+                query ="INSERT INTO attendancepercentage (subject_id, student_id, theory,practical, total,with_medicaltheory,with_medicalpractical,with medical total,elegibal) VALUES ('" + subject + "', '" + studentid + "', " + theorypersentage + "," + practicalpersentage + "," + totalattendance +"', " + totaltheory + "," + totalprac + "," + totalmedi +"," + status + ")";
                 db.writeData(query);
                 break;
             default:

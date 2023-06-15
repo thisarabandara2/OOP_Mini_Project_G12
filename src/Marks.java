@@ -7,8 +7,8 @@ import java.awt.event.MouseEvent;
 import java.sql.*;
 import java.util.Arrays;
 import java.text.DecimalFormat;
-
-public class Marks extends JFrame {
+import java.util.Objects;
+public class Marks extends  Elegibility{
     private JButton AddCA;
     private JButton EditCA;
     private JButton DeleteCA;
@@ -22,10 +22,10 @@ public class Marks extends JFrame {
     private JTextField quiz4;
     private JTextField quiz5;
     private JTextField AssignmentText1;
-    private JTextField AssignmentText2;
+    private JTextField AssignmentText5;
     private JTextField MidText2;
-    private JLabel textggf;
-    private JTextField IDTextfinal;
+
+    private JTextField ID_Text_Final;
     private JTextField Textfinaltheory;
     private JTextField TextFinalPractical;
     private JComboBox Subjectcombo;
@@ -33,38 +33,100 @@ public class Marks extends JFrame {
     private JPanel Main;
     private JTable resulttable;
     private JTable finalmarkstable;
-    String lecid = "Lec001";
-
+    private JTextField AssignmentText2;
+    private JTextField AssignmentText4;
+    private JTextField AssignmentText3;
+    JFrame frame = new JFrame();
+    private JLabel Quiz2;
+    private JTable gpa;
+    private JTextField considerassignment;
+    private JLabel lblas1;
+    private JLabel lblas2;
+    private JLabel lblas3;
+    private JLabel lblas4;
+    private JLabel lblas5;
+    private JLabel lblconas;
+    private JLabel lblmid;
+    private JLabel lblth;
+    private JLabel lblpra;
+    String lecid = "lec01";
+    DBConnector dbconn = new DBConnector();
+    Connection conn = dbconn.getConnection();
+    String Query="";
+    DecimalFormat decimalFormat = new DecimalFormat("#.#");
     Marks() throws SQLException {
-        setContentPane(Main);
-        setTitle("Marks");
-        setSize(600,600);
-        setVisible(true);
+        frame.setContentPane(Main);
+        frame.setTitle("Marks");
+        frame.setSize(600,600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
 
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/tecmis", "root", "");
+
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT course_id FROM `lecture` WHERE user_id='" + lecid + "'");
+        ResultSet rs = stmt.executeQuery("SELECT subject FROM `lecsubject` WHERE lecid='" + lecid + "'");
         while (rs.next()) {
-            Subjectcombo.addItem(rs.getString("course_id"));
+            Subjectcombo.addItem(rs.getString("subject"));
         }
         showcatable();
         showendtable();
         AddCA.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-              addca();
-            }
+               if(quiz1.getText().trim().isEmpty() &&
+                         quiz2.getText().trim().isEmpty() &&
+                         quiz3.getText().trim().isEmpty() &&
+                         quiz4.getText().trim().isEmpty() &&
+                         quiz5.getText().trim().isEmpty() &&
+                         evaluatequiz.getText().trim().isEmpty() &&
+                        AssignmentText1.getText().trim().isEmpty() &&
+                        AssignmentText2.getText().trim().isEmpty() &&
+                        AssignmentText3.getText().trim().isEmpty() &&
+                        AssignmentText4.getText().trim().isEmpty() &&
+                        AssignmentText5.getText().trim().isEmpty() &&
+                        considerassignment.getText().trim().isEmpty() &&
+                        MidText2.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Please fill all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+               else if (IDText.getText().trim().isEmpty()) {
+                   JOptionPane.showMessageDialog(null, "Please enter the ID field.", "Error", JOptionPane.ERROR_MESSAGE);
+               }else if(quiz1.getText().isEmpty() && quiz2.getText().isEmpty() &&
+                       quiz3.getText().isEmpty() && quiz4.getText().isEmpty() &&
+                       quiz5.getText().isEmpty()){
+                   JOptionPane.showMessageDialog(null, "Please Add Quiz field.", "Error", JOptionPane.ERROR_MESSAGE);
+               }
+               else if (quiz1.getText().trim().isEmpty() && quiz2.getText().trim().isEmpty() &&
+                        quiz3.getText().trim().isEmpty() && quiz4.getText().trim().isEmpty() &&
+                        quiz5.getText().trim().isEmpty() &&!evaluatequiz.getText().trim().isEmpty()) {
+                   JOptionPane.showMessageDialog(null, "Please fill quiz field", "Error", JOptionPane.ERROR_MESSAGE);
+               }else if ((!quiz1.getText().trim().isEmpty() || !quiz2.getText().trim().isEmpty() ||
+                        !quiz3.getText().trim().isEmpty() || !quiz4.getText().trim().isEmpty() ||
+                        !quiz5.getText().trim().isEmpty()) &&evaluatequiz.getText().trim().isEmpty()) {
+                   JOptionPane.showMessageDialog(null, "Please fill ewaluated quiz field field", "Error", JOptionPane.ERROR_MESSAGE);
+               } else if (AssignmentText1.getText().isEmpty() && AssignmentText2.getText().isEmpty() && AssignmentText3.getText().isEmpty() && AssignmentText4.getText().isEmpty() && AssignmentText5.getText().isEmpty() && !considerassignment.getText().isEmpty()) {
+                   JOptionPane.showMessageDialog(null, "Please fill the Assignment fields.", "Error", JOptionPane.ERROR_MESSAGE);
+               } else if ((!AssignmentText1.getText().isEmpty() || !AssignmentText2.getText().isEmpty() || !AssignmentText3.getText().isEmpty() || !AssignmentText4.getText().isEmpty() || !AssignmentText5.getText().isEmpty()) && considerassignment.getText().isEmpty()) {
+                   JOptionPane.showMessageDialog(null, "Please fill the Evaluate Assignment field.", "Error", JOptionPane.ERROR_MESSAGE);
+               }
+               else if(AssignmentText1.getText().isEmpty()&&AssignmentText2.getText().isEmpty()&&AssignmentText3.getText().isEmpty()&&AssignmentText4.getText().isEmpty()&&AssignmentText5.getText().isEmpty()&&MidText2.getText().isEmpty()){
+                   JOptionPane.showMessageDialog(null, "Please fill either  Assignment or mid field.", "Error", JOptionPane.ERROR_MESSAGE);
+               }
+               else{
+                   AddCA();
+
+
+               }
+                }
         });
         EditCA.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                editca();
+                EditCA();
             }
         });
         DeleteCA.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                deleteca();
+                DeleteCA();
             }
         });
         AddFinalButton.addActionListener(new ActionListener() {
@@ -87,14 +149,14 @@ public class Marks extends JFrame {
         deleteFinalButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                deletefinalmarks();
+                Deletefinalmarks();
 
             }
         });
         resulttable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                loadcafinal();
+                FinalCALoad();
             }
         });
         finalmarkstable.addMouseListener(new MouseAdapter() {
@@ -103,200 +165,228 @@ public class Marks extends JFrame {
                 loadtablefinal();
             }
         });
+        Subjectcombo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AssignmentText1.setVisible(true);
+                AssignmentText2.setVisible(true);
+                AssignmentText3.setVisible(true);
+                AssignmentText4.setVisible(true);
+                AssignmentText5.setVisible(true);
+                considerassignment.setVisible(true);
+                MidText2.setVisible(true);
+                lblas1.setVisible(true);
+                lblas2.setVisible(true);
+                lblas3.setVisible(true);
+                lblas4.setVisible(true);
+                lblas5.setVisible(true);
+                lblconas.setVisible(true);
+                lblmid.setVisible(true);
+
+                Statement stmt;
+                String mid="";
+                String assignment="";
+                String theory="";
+                String practical="";
+                try {
+                    stmt = conn.createStatement();
+                    ResultSet result= stmt.executeQuery("select assignment,mid,final_theory,final_practical from marks_priority where Subject_id='"+Subjectcombo.getSelectedItem()+"'");
+                    while (result.next()){
+                        mid=result.getString("mid");
+                        assignment=result.getString("assignment");
+                        theory=result.getString("final_theory");
+                        practical=result.getString("final_practical");
+                    }
+                    System.out.println(mid);
+                    if(mid=="0"){
+                        System.out.println("ho gana pokune");
+                    }
+                    if(assignment=="0"){
+                        AssignmentText1.setVisible(false);
+                        AssignmentText2.setVisible(false);
+                        AssignmentText3.setVisible(false);
+                        AssignmentText4.setVisible(false);
+                        AssignmentText5.setVisible(false);
+                        considerassignment.setVisible(false);
+                        lblas1.setVisible(false);
+                        lblas2.setVisible(false);
+                        lblas3.setVisible(false);
+                        lblas4.setVisible(false);
+                        lblas5.setVisible(false);
+                        lblconas.setVisible(false);
+                    }
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+            }
+        });
     }
-    void addca() {
-        DecimalFormat decimalFormat = new DecimalFormat("#.#");
-        decimalFormat.setDecimalSeparatorAlwaysShown(false);
+    Float[] marksarray = new Float[5];
+    String stringassignment="";
+    float quiz;
 
-        Float[] quizmarks = new Float[5];
-        quizmarks[0] = Float.valueOf(quiz1.getText());
-        quizmarks[1] = Float.valueOf(quiz2.getText());
-        quizmarks[2] = Float.valueOf(quiz3.getText());
-        quizmarks[3] = Float.valueOf(quiz4.getText());
-        quizmarks[4] = Float.valueOf(quiz5.getText());
-        int considerquiz = Integer.valueOf(evaluatequiz.getText());
+    String studentid;
+    int considerquiz;
+    String mid = "";
+    float total;
+    float assignment=0;
+   private void AddCA(){
+       int sum = 0;
+       marksarray[0] = zero(quiz1.getText());
+       marksarray[1] = zero(quiz2.getText());
+       marksarray[2] = zero(quiz3.getText());
+       marksarray[3] = zero(quiz4.getText());
+       marksarray[4] = zero(quiz5.getText());
+       Arrays.sort(marksarray);
 
-        Arrays.sort(quizmarks);
+       considerquiz = (int) zero(evaluatequiz.getText());
+       for (int i = marksarray.length - 1; i >= marksarray.length - considerquiz; i--){
+           sum += marksarray[i];
+       }
 
-        int sum = 0;
-        for (int i = quizmarks.length - 1; i >= quizmarks.length - considerquiz; i--) {
-            sum += quizmarks[i];
+       quiz = (float) (sum / considerquiz);
+       if (AssignmentText1.getText().isEmpty() && AssignmentText2.getText().isEmpty()&& AssignmentText3.getText().isEmpty() && AssignmentText4.getText() .isEmpty() && AssignmentText5.getText() .isEmpty()) {
+           stringassignment = "N/A";
+       }
+       else{
+           marksarray[0] = zero(AssignmentText1.getText());
+           marksarray[1] = zero(AssignmentText2.getText());
+           marksarray[2] = zero(AssignmentText3.getText());
+           marksarray[3] = zero(AssignmentText4.getText());
+           marksarray[4] = zero(AssignmentText5.getText());
+           Arrays.sort(marksarray);
+          int considerquiz = Integer.parseInt(considerassignment.getText());
+           sum = 0;
+           for (int i = marksarray.length - 1; i >= marksarray.length - considerquiz; i--) {
+               sum += marksarray[i];
+           }
+           assignment = (float) (sum / considerquiz);
+           stringassignment = String.valueOf(assignment);
+       }
+
+       if (MidText2.getText().isEmpty()) {
+           mid = "N/A";
+       }else{
+       mid = MidText2.getText();
+       }
+        if( stringassignment.equals("N/A")&&mid.equals("N/A")) {
+            total = quiz;
+        }else if (mid.equals("N/A")) {
+            total = (assignment + quiz) / 2;
+        } else if (stringassignment.equals("N/A")) {
+            total = (quiz + Float.parseFloat(mid)) / 2;
+        } else {
+            total = (quiz + Float.parseFloat(mid) + assignment) / 3;
         }
 
         String subject = (String) Subjectcombo.getSelectedItem();
-        String studentid = IDText.getText().toString();
-        Float intquiz = (float) (sum / considerquiz);
-        Float ass1, ass2;
-        Float intassignment = null;
-
-        String assignment = null;
-        Float total=7.7f;
-        try {
-            ass1 = Float.valueOf(AssignmentText1.getText());
-            ass2 = Float.valueOf(AssignmentText2.getText());
-            intassignment = (ass1 + ass2) / 2;
-            assignment = String.valueOf(intassignment);
-        } catch (NumberFormatException e) {
-            assignment = "N/A";
-        }
-        String mid = MidText2.getText();
-        if (mid.isEmpty()) {
-            mid = "N/A";
-        }
-
-        if (mid.equals("N/A") && assignment.equals("N/A")) {
-            total = intquiz;
-        } else if (mid.equals("N/A")) {
-            total = (intassignment + intquiz )/ 2;
-        } else if (assignment.equals("N/A")) {
-            total = (intquiz + Float.valueOf(mid)) / 2;
-        } else {
-            total = (intquiz + Float.valueOf(mid) + intassignment) / 3;
-        }
-        String iselegibal;
-        if (total >= 50) {
-            iselegibal = "Eligible";
-        } else {
-            iselegibal = "Not Eligible";
-        }
-        String formattedTotal = decimalFormat.format(total);
-        System.out.println(studentid);
-        System.out.println(subject);
-        System.out.println(assignment);
-        System.out.println(mid);
-        System.out.println(intquiz);
-        System.out.println(total);
-        System.out.println(iselegibal);
-
-
-    DatabaseConnection dbconn = new DatabaseConnection();
-    String query = "INSERT INTO ca_marks (subject_id, student_id, quiz, assignment, mid, Total, Elegibaly) VALUES ('" + subject + "', '" + studentid + "', '" + intquiz + "', '" + assignment + "', '" + mid + "', '" + total + "', '" + iselegibal + "')";
-    dbconn.writeData(query);
-    showcatable();
-    clearca();
-
-    }
 
 
 
-
-
-    void editca() {
-        DecimalFormat decimalFormat = new DecimalFormat("#.#");
-        decimalFormat.setDecimalSeparatorAlwaysShown(false);
-
-        Float[] quizmarks = new Float[5];
-        quizmarks[0] = Float.valueOf(quiz1.getText());
-        quizmarks[1] = Float.valueOf(quiz2.getText());
-        quizmarks[2] = Float.valueOf(quiz3.getText());
-        quizmarks[3] = Float.valueOf(quiz4.getText());
-        quizmarks[4] = Float.valueOf(quiz5.getText());
-        int considerquiz = Integer.valueOf(evaluatequiz.getText());
-
-        Arrays.sort(quizmarks);
-
-        int sum = 0;
-        for (int i = quizmarks.length - 1; i >= quizmarks.length - considerquiz; i--) {
-            sum += quizmarks[i];
-        }
-
-        String subject = (String) Subjectcombo.getSelectedItem();
-        String studentid = IDText.getText().toString();
-        Float intquiz = (float) (sum / considerquiz);
-        Float ass1, ass2;
-        Float intassignment = null;
-
-        String assignment = null;
-        Float total=7.7f;
-        try {
-            ass1 = Float.valueOf(AssignmentText1.getText());
-            ass2 = Float.valueOf(AssignmentText2.getText());
-            intassignment = (ass1 + ass2) / 2;
-            assignment = String.valueOf(intassignment);
-        } catch (NumberFormatException e) {
-            assignment = "N/A";
-        }
-        String mid = MidText2.getText();
-        if (mid.isEmpty()) {
-            mid = "N/A";
-        }
-
-        if (mid.equals("N/A") && assignment.equals("N/A")) {
-            total = intquiz;
-        } else if (mid.equals("N/A")) {
-            total = (intassignment + intquiz )/ 2;
-        } else if (assignment.equals("N/A")) {
-            total = (intquiz + Float.valueOf(mid)) / 2;
-        } else {
-            total = (intquiz + Float.valueOf(mid) + intassignment) / 3;
-        }
-        String iselegibal;
-        if (total >= 50) {
-            iselegibal = "Eligible";
-        } else {
-            iselegibal = "Not Eligible";
-        }
-        String formattedTotal = decimalFormat.format(total);
-        System.out.println(studentid);
-        System.out.println(subject);
-        System.out.println(assignment);
-        System.out.println(mid);
-        System.out.println(intquiz);
-        System.out.println(total);
-        System.out.println(iselegibal);
-
-
-        DatabaseConnection dbconn = new DatabaseConnection();
-        String query = "UPDATE ca_marks SET quiz = '" + intquiz + "', assignment = '" + assignment + "', mid = '" + mid + "', Total = '" + formattedTotal + "', Elegibaly = '" + iselegibal + "' WHERE student_id = '" + studentid + "' AND subject_id = '" + subject + "'";
+       studentid = IDText.getText();
+        String query = "INSERT INTO ca_marks (subject_id, student_id, quiz, assignment, mid, Total, Elegibaly) VALUES ('" + subject + "', '" + studentid + "', '" +decimalFormat.format(quiz) + "', '" + stringassignment + "', '" + mid + "', '" +decimalFormat.format(total) + "', '" + eligibal(total) + "')";
         dbconn.writeData(query);
         showcatable();
-        clearca();
-
+        ClearCA();
     }
 
-    void deleteca(){
-        String studentid = IDText.getText().toString();
-        DatabaseConnection dbconn = new DatabaseConnection();
+   private void EditCA(){
+       int sum = 0;
+       marksarray[0] = zero(quiz1.getText());
+       marksarray[1] = zero(quiz2.getText());
+       marksarray[2] = zero(quiz3.getText());
+       marksarray[3] = zero(quiz4.getText());
+       marksarray[4] = zero(quiz5.getText());
+       Arrays.sort(marksarray);
+
+       considerquiz = (int) zero(evaluatequiz.getText());
+       for (int i = marksarray.length - 1; i >= marksarray.length - considerquiz; i--){
+           sum += marksarray[i];
+       }
+
+       quiz = (float) (sum / considerquiz);
+       if (AssignmentText1.getText().isEmpty() && AssignmentText2.getText().isEmpty()&& AssignmentText3.getText().isEmpty() && AssignmentText4.getText() .isEmpty() && AssignmentText5.getText() .isEmpty()) {
+           stringassignment = "N/A";
+       }
+       else{
+           marksarray[0] = zero(AssignmentText1.getText());
+           marksarray[1] = zero(AssignmentText2.getText());
+           marksarray[2] = zero(AssignmentText3.getText());
+           marksarray[3] = zero(AssignmentText4.getText());
+           marksarray[4] = zero(AssignmentText5.getText());
+           Arrays.sort(marksarray);
+           int considerquiz = Integer.parseInt(considerassignment.getText());
+           sum = 0;
+           for (int i = marksarray.length - 1; i >= marksarray.length - considerquiz; i--) {
+               sum += marksarray[i];
+           }
+           assignment = (float) (sum / considerquiz);
+           stringassignment = String.valueOf(assignment);
+       }
+
+       if (MidText2.getText().isEmpty()) {
+           mid = "N/A";
+       }else{
+           mid = MidText2.getText();
+       }
+       if( stringassignment.equals("N/A")&&mid.equals("N/A")) {
+           total = quiz;
+       }else if (mid.equals("N/A")) {
+           total = (assignment + quiz) / 2;
+       } else if (stringassignment.equals("N/A")) {
+           total = (quiz + Float.parseFloat(mid)) / 2;
+       } else {
+           total = (quiz + Float.parseFloat(mid) + assignment) / 3;
+       }
+       String subject = (String) Subjectcombo.getSelectedItem();
+
+       studentid = IDText.getText();
+       String query = "UPDATE ca_marks SET quiz = '" + quiz + "', assignment = '" + assignment + "', mid = '" + mid + "', Total = '" + total + "', Elegibaly = '" + eligibal(total)+ "' WHERE student_id = '" + studentid + "' AND subject_id = '" + subject + "'";
+       dbconn.writeData(query);
+       showcatable();
+       ClearCA();
+    }
+
+   private void DeleteCA(){
+        String studentid = IDText.getText();
         String query = "DELETE FROM ca_marks WHERE student_id = '" + studentid + "'";
         dbconn.writeData(query);
         showcatable();
-        clearca();
+        ClearCA();
     }
-    public void showcatable(){
-        try {
-            DBConnector dbconn2 = new DBConnector();
-            Connection conn2 = dbconn2.getConnection();
-            String query = "SELECT * FROM ca_marks";
-            Statement stmt2 = conn2.createStatement();
-            ResultSet rs2 = stmt2.executeQuery(query);
+    private void showcatable(){
+        try{
+           Query = "SELECT * FROM `ca_marks` WHERE subject_id='"+returnsubject()+"'";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(Query);
             DefaultTableModel model = new DefaultTableModel(
-                    new Object[]{"Subject ID", "Student ID", "Quiz", "Assignment", "Mid","Total","Elegibaly"},
+                    new Object[]{"Student ID", "Quiz", "Assignment", "Mid","Total","Elegibaly"},
                     0);
 
-            while (rs2.next()) {
-                String studentId = rs2.getString("student_id");
-                String subjectId = rs2.getString("subject_id");
-                String quiz = rs2.getString("quiz");
-                String assignment = rs2.getString("assignment");
-                String mid = rs2.getString("mid");
-                String total = rs2.getString("Total");
-                String elegibal = rs2.getString("Elegibaly");
-                // Add the data as a new row to the model
-                model.addRow(new Object[]{subjectId, studentId, quiz, assignment,mid,total,elegibal});
+            while (rs.next()){
+                String studentId = rs.getString("student_id");
+                String quiz = rs.getString("quiz");
+                String assignment = rs.getString("assignment");
+                String mid = rs.getString("mid");
+                String total = rs.getString("Total");
+                String elegibal = rs.getString("Elegibaly");
+
+                model.addRow(new Object[]{ studentId, quiz, assignment,mid,total,elegibal});
             }
             resulttable.setModel(model);
-            rs2.close();
-            stmt2.close();
-            conn2.close();
+            rs.close();
+            stmt.close();
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("database connection lose"+e);
         }
     }
-    void clearca() {
+   private void ClearCA() {
         IDText.setText("");
         MidText2.setText("");
         AssignmentText1.setText("");
-        AssignmentText2.setText("");
+        AssignmentText5.setText("");
         evaluatequiz.setText("");
         quiz1.setText("");
         quiz2.setText("");
@@ -304,111 +394,147 @@ public class Marks extends JFrame {
         quiz4.setText("");
         quiz5.setText("");
     }
-    void loadcafinal(){
+  private void FinalCALoad(){
         int selectedRow = resulttable.getSelectedRow();
-        String studentId = null;
+        String studentId;
         if (selectedRow != -1){
             DefaultTableModel model = (DefaultTableModel) resulttable.getModel();
-            String subjectId = model.getValueAt(selectedRow, 0).toString();
             studentId = model.getValueAt(selectedRow, 1).toString();
-            Float quiz = Float.parseFloat(model.getValueAt(selectedRow, 2).toString());
-            Float assignment = Float.parseFloat(model.getValueAt(selectedRow, 3).toString());
-            Float mid = Float.parseFloat(model.getValueAt(selectedRow, 4).toString());
+            String mid = (model.getValueAt(selectedRow, 3).toString());
             MidText2.setText(String.valueOf(mid));
             IDText.setText(String.valueOf(studentId));
         }
-
     }
-void loadtablefinal(){
+private void loadtablefinal(){
         int selectedRow = finalmarkstable.getSelectedRow();
-        String studentId = null;
         if (selectedRow != -1) {
             DefaultTableModel model = (DefaultTableModel) finalmarkstable.getModel();
             String stuId = model.getValueAt(selectedRow, 0).toString();
             Float finalmarks = Float.parseFloat(model.getValueAt(selectedRow, 2).toString());
-            IDTextfinal.setText(String.valueOf(stuId));
+            ID_Text_Final.setText(String.valueOf(stuId));
             TextFinalPractical.setText(String.valueOf(finalmarks));
         }
     }
-    void addfinalmarks() throws SQLException {
-        String Stuid = IDTextfinal.getText();
-        String subject = Subjectcombo.getSelectedItem().toString();
-        float theory=0.0f;
-        float practical =0.0f;
-        String sub=Subjectcombo.getSelectedItem().toString();
-        if (TextFinalPractical.getText().isEmpty()) {
-            theory=0.0f;
+    void addfinalmarks() throws SQLException{
+        String finaltheorystring="0";
+        String Stuid = ID_Text_Final.getText();
+        String subject = Objects.requireNonNull(Subjectcombo.getSelectedItem()).toString();
+        float theory;
+        float practical;
+        if(ID_Text_Final.getText().isEmpty()&&Textfinaltheory.getText().isEmpty()&&TextFinalPractical.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Please fill all field ", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(ID_Text_Final.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Please fill id field ", "Error", JOptionPane.ERROR_MESSAGE);
+        }else if (Textfinaltheory.getText().isEmpty()&&TextFinalPractical.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Add marks field ", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            theory=Float.valueOf( Textfinaltheory.getText());
+            if(Textfinaltheory.getText().isEmpty()) {
+                theory=0.0f;
+            }
+            else{
+                theory=Float.parseFloat( Textfinaltheory.getText());
+            }
+            if(TextFinalPractical.getText().isEmpty()){
+                practical=0.0f;
+            }
+            else{
+                practical=Float.parseFloat( TextFinalPractical.getText());
+            }
+            FinalMarksCalculator x=new FinalMarksCalculator();
+            x.calculateAndSaveFinalMarks(Stuid,subject,theory,practical);
+
+            showendtable();
         }
 
-        if (TextFinalPractical.getText().isEmpty()) {
-            theory=0.0f;
-        }
-        else{
-            theory=Float.valueOf( TextFinalPractical.getText());
-        }
-        FinalMarksCalculator x=new FinalMarksCalculator();
-        float y=x.calculateAndSaveFinalMarks(Stuid,subject,theory,practical);
-        GradeCalculator cal=new GradeCalculator();
-        String grade= cal.calculateGrade(y);
-        Float gpa=cal.calculater(grade);
-        gpasend gpasend2=new gpasend();
-        gpasend2.sendgpa(subject,Stuid,gpa);
-        System.out.println(y);
-//SubjectCreditRetriever credit=new SubjectCreditRetriever();
-//        DatabaseConnection dbconn = new DatabaseConnection();
-//        String query = "INSERT INTO final_marks(stuid, subid, theory, finalMarks) VALUES ('" + Stuid + "', '" + subject + "', '" + theory + "', '" + practical + "')";
-//        dbconn.writeData(query);
-  //      showendtable();
     }
     void editfinalmarks(){
-        String Stuid=IDTextfinal.getText();
-        String subject=Subjectcombo.getSelectedItem().toString();
-        String theory=Textfinaltheory.getText();
-        String practical=TextFinalPractical.getText();
-        DatabaseConnection dbconn = new DatabaseConnection();
-        String query = "UPDATE final_marks SET subid = '" + subject + "', theory = '"+theory+"', finalMarks = '" + practical + "' WHERE stuid = '" + Stuid + "' AND subid = '" +subject+ "'";
-        dbconn.writeData(query);
-        showendtable();
+          String finaltheorystring="0";
+        String Stuid = ID_Text_Final.getText();
+        String subject = Objects.requireNonNull(Subjectcombo.getSelectedItem()).toString();
+        float theory;
+        float practical;
+        if(ID_Text_Final.getText().isEmpty()&&Textfinaltheory.getText().isEmpty()&&TextFinalPractical.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Please fill all field ", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(ID_Text_Final.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Please fill id field ", "Error", JOptionPane.ERROR_MESSAGE);
+        }else if (Textfinaltheory.getText().isEmpty()&&TextFinalPractical.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Add marks field ", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            if(Textfinaltheory.getText().isEmpty()) {
+                theory=0.0f;
+            }
+            else{
+                theory=Float.parseFloat( Textfinaltheory.getText());
+            }
+            if(TextFinalPractical.getText().isEmpty()){
+                practical=0.0f;
+            }
+            else{
+                practical=Float.parseFloat( TextFinalPractical.getText());
+            }
+            FinalMarksCalculator y=new FinalMarksCalculator();
+            try {
+                y.calculateAndupdateFinalMarks(Stuid,subject,theory,practical);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            showendtable();
+        }
+
     }
-    void deletefinalmarks(){
-        String Stuid=IDTextfinal.getText();
-        String subject=Subjectcombo.getSelectedItem().toString();
-        DatabaseConnection dbconn = new DatabaseConnection();
+    void Deletefinalmarks(){
+        String Stuid= ID_Text_Final.getText();
+        String subject= Objects.requireNonNull(Subjectcombo.getSelectedItem()).toString();
         String query = "DELETE FROM final_marks WHERE stuid = '" + Stuid + "' AND subid = '" + subject + "'";
         dbconn.writeData(query);
        showendtable();
     }
     public void showendtable(){
         try {
-            DBConnector dbconn2 = new DBConnector();
-            Connection conn2 = dbconn2.getConnection();
-            String query = "SELECT * FROM final_marks";
-            Statement stmt2 = conn2.createStatement();
-            ResultSet rs2 = stmt2.executeQuery(query);
+            String query = "SELECT * FROM `final_marks` WHERE subid='"+returnsubject()+"'";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
             DefaultTableModel model = new DefaultTableModel(
-                    new Object[]{"stuid","subid","Theory","FinalMarks"},
+                    new Object[]{"stuid","Theory","FinalMarks","Total","Grade"},
                     0);
-
-            while (rs2.next()){
-                String studentId = rs2.getString("stuid");
-                String subjectId = rs2.getString("subid");
-                String theory = rs2.getString("Theory");
-                String finalmarks = rs2.getString("finalMarks");
-
+            while (rs.next()){
+                String studentId = rs.getString("stuid");
+                String theory = rs.getString("Theory");
+                String finalmarks = rs.getString("finalMarks");
+                String total = rs.getString("Total");
+                String grade = rs.getString("Grade");
                 // Add the data as a new row to the model
-                model.addRow(new Object[]{studentId,subjectId,theory,finalmarks});
+                model.addRow(new Object[]{studentId,theory,finalmarks,total,grade});
             }
             finalmarkstable.setModel(model);
-            rs2.close();
-            stmt2.close();
-            conn2.close();
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error Occur in CA Table"+e);
+        }
+}
+private String returnsubject(){
+       return (String) Subjectcombo.getSelectedItem();
+
+}
+    public float zero(String value) {
+        if (value.isEmpty()) {
+            return 0;
+        } else {
+            return Float.parseFloat(value);
         }
 
-
-
+    }
+private String eligibal(float total){
+    String Is_Elegi;
+        if (total >= 50) {
+        Is_Elegi = "Eligible";
+    } else {
+        Is_Elegi = "Not Eligible";
+    }
+        return Is_Elegi;
 }}
