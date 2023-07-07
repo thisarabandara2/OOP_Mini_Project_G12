@@ -142,6 +142,8 @@ public class Updatestudent extends JFrame{
     }
 
 
-
+    public static void main(String[] args) {
+        Updatestudent as = new Updatestudent();
+    }
     
 }

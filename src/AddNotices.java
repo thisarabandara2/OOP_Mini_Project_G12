@@ -85,31 +85,22 @@ public class AddNotices extends JFrame {
                     File f = chooser.getSelectedFile();
                     String filename = f.getAbsolutePath();
 
-                    Path pathAbsolute = f.toPath();
-                    Path pathBase = Paths.get("").toAbsolutePath();
-                    Path pathRelative = pathBase.relativize(pathAbsolute);
-                    String relativePath = pathRelative.toString().replace(File.separator, "/");
-                    chooseBox.setText("notices/" + f.getName());
-
                     String newPath = "notices/";
                     File directory = new File(newPath);
                     if (!directory.exists()) {
                         directory.mkdir();
                     }
 
-                    File sourceFile = new File(filename);
-                    String extension = filename.substring(filename.lastIndexOf('.') + 1);
-                    String newName = f.getName();
+                    File destinationFile = new File(newPath + f.getName());
 
-                    File destinationFile = new File(newPath + newName);
+                    Files.copy(f.toPath(), destinationFile.toPath());
 
-                    Files.copy(sourceFile.toPath(), destinationFile.toPath());
+                    chooseBox.setText(newPath + f.getName());
                 } catch (IOException ex) {
                     Logger.getLogger(AddTimeTables.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        });
-
+});
         deleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

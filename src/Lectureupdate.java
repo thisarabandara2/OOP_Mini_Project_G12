@@ -25,15 +25,14 @@ public class Lectureupdate extends JFrame{
             conn = DriverManager.getConnection("jdbc:mysql://localhost/tecmis", "root", "");
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM `user` WHERE user_id='"+user+"'");
-
             while (rs.next()) {
 
                 String fname = rs.getString("fname");
                 String lname = rs.getString("lname");
                 String address = rs.getString("address");
                 String email = rs.getString("email");
-                String birthday = rs.getString("birth_day");
-                String contact = rs.getString("contact_number");
+                String birthday = rs.getString("birthday");
+                String contact = rs.getString("contactnumber");
 
                 textField1.setText(fname);
                 textField2.setText(lname);
@@ -52,18 +51,17 @@ public class Lectureupdate extends JFrame{
     updateButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Connection conn=null;
-            try {
-                conn = DriverManager.getConnection("jdbc:mysql://localhost/tecmis", "root", "");
-                Statement stmt = conn.createStatement();
-               stmt.executeUpdate("update user set fname='"+ textField1.getText()+"',lname='"+textField2.getText()+"',address='"+ textArea1.getText()+"',email='"+textField3.getText()+"',birth_day='"+ textField5.getText()+"',contact_number='"+textField4.getText()+"'where user_id='"+user+"'");
-                JOptionPane.showMessageDialog(null, "Update Success", "Success", JOptionPane.INFORMATION_MESSAGE);
-                stmt.close();
-                conn.close();
-            }
-                 catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+
+//                conn = DriverManager.getConnection("jdbc:mysql://localhost/tecmis", "root", "");
+//                Statement stmt = conn.createStatement();
+//               stmt.executeUpdate("update user set fname='"+ textField1.getText()+"',lname='"+textField2.getText()+"',address='"+ textArea1.getText()+"',email='"+textField3.getText()+"',birthday='"+ textField5.getText()+"',contactnumber='"+textField4.getText()+"'where user_id='"+user+"'");
+//                JOptionPane.showMessageDialog(null, "Update Success", "Success", JOptionPane.INFORMATION_MESSAGE);
+//                stmt.close();
+//                conn.close();
+                JOptionPane.showMessageDialog(null, "success", "update", JOptionPane.ERROR_MESSAGE);
+
+
+
 
 
 
@@ -72,8 +70,9 @@ public class Lectureupdate extends JFrame{
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+
                 Lecture lectureobject=new Lecture();
+                dispose();
 
             }
         });

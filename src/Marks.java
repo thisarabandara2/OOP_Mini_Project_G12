@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -49,6 +50,7 @@ public class Marks extends  Elegibility{
     private JLabel lblmid;
     private JLabel lblth;
     private JLabel lblpra;
+
     String lecid = "lec01";
     DBConnector dbconn = new DBConnector();
     Connection conn = dbconn.getConnection();
@@ -58,7 +60,6 @@ public class Marks extends  Elegibility{
         frame.setContentPane(Main);
         frame.setTitle("Marks");
         frame.setSize(600,600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
 
@@ -112,6 +113,13 @@ public class Marks extends  Elegibility{
                }
                else{
                    AddCA();
+                   try {
+                      Elegibility eligi=new Elegibility();
+                      eligi.studentattenpresent(IDText.getText().toString(),Subjectcombo.getSelectedItem().toString());
+
+                  } catch (SQLException ex) {
+                       throw new RuntimeException(ex);
+                   }
 
 
                }
@@ -146,13 +154,7 @@ public class Marks extends  Elegibility{
                 editfinalmarks();
             }
         });
-        deleteFinalButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Deletefinalmarks();
 
-            }
-        });
         resulttable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -416,7 +418,6 @@ private void loadtablefinal(){
         }
     }
     void addfinalmarks() throws SQLException{
-        String finaltheorystring="0";
         String Stuid = ID_Text_Final.getText();
         String subject = Objects.requireNonNull(Subjectcombo.getSelectedItem()).toString();
         float theory;
@@ -537,4 +538,7 @@ private String eligibal(float total){
         Is_Elegi = "Not Eligible";
     }
         return Is_Elegi;
-}}
+}
+
+
+}

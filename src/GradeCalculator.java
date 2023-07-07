@@ -69,6 +69,7 @@ public class GradeCalculator {
     DecimalFormat format=new DecimalFormat("#.#");
    private Connection dbconn = connec.getConnection();
     public void calculategpa(Float gp, String subid, String stuid) throws SQLException{
+        System.out.println(gp+"gpa");
         int credit = 0;
         float newgpa, currentgpa=0;
         String gpastatus="";

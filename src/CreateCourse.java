@@ -45,7 +45,7 @@ public class CreateCourse extends JFrame {
                     String cName = courseName.getText();
                     int cCredit = Integer.parseInt(courseCredit.getText());
                     String cDep = comboBoxDepartment.getSelectedItem().toString();
-                    String cSemester = comboBoxSemester.getSelectedItem().toString();
+                    int cSemester = Integer.parseInt(comboBoxSemester.getSelectedItem().toString());
                     int cLevel = Integer.parseInt(comboBoxLevel.getSelectedItem().toString());
                     String gpastatus = comboBoxgpa.getSelectedItem().toString();
                     String cType;

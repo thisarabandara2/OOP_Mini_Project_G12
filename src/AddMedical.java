@@ -33,6 +33,7 @@ public class AddMedical extends JFrame {
     private JTable table1;
     private JButton searchButton;
     private JButton updateBtn;
+    private JComboBox typeBox;
 
 
     private PreparedStatement pst;
@@ -76,6 +77,7 @@ public class AddMedical extends JFrame {
                 java.util.Date endDate = date2.getDate();
                 String medFile = chooseBox.getText();
                 String subjects = subBox.getText();
+                String type = typeBox.getSelectedItem().toString();
 
 
 
@@ -90,7 +92,7 @@ public class AddMedical extends JFrame {
 
                     try {
 
-                        String sql = "INSERT INTO medical (tg, level, semester, start_date, end_date, subjects, medFile) VALUES ('" + tg + "', '" + level + "', '" + semester + "', '" + startDate + "', '" + endDate + "', '" + subjects + "', '" + medFile + "')";
+                        String sql = "INSERT INTO medical (tg, level, semester, start_date, end_date, subjects, medFile, type) VALUES ('" + tg + "', '" + level + "', '" + semester + "', '" + startDate + "', '" + endDate + "', '" + subjects + "', '" + medFile + "', '"+type+"')";
                         Statement stmt = conn.createStatement();
                         stmt.executeUpdate(sql);
 
@@ -116,30 +118,22 @@ public class AddMedical extends JFrame {
                     File f = chooser.getSelectedFile();
                     String filename = f.getAbsolutePath();
 
-                    Path pathAbsolute = f.toPath();
-                    Path pathBase = Paths.get("").toAbsolutePath();
-                    Path pathRelative = pathBase.relativize(pathAbsolute);
-                    String relativePath = pathRelative.toString().replace(File.separator, "/");
-                    chooseBox.setText("medicals/" + f.getName());
-
                     String newPath = "medicals/";
                     File directory = new File(newPath);
                     if (!directory.exists()) {
                         directory.mkdir();
                     }
 
-                    File sourceFile = new File(filename);
-                    String extension = filename.substring(filename.lastIndexOf('.') + 1);
-                    String newName = f.getName();
+                    File destinationFile = new File(newPath + f.getName());
 
-                    File destinationFile = new File(newPath + newName);
+                    Files.copy(f.toPath(), destinationFile.toPath());
 
-                    Files.copy(sourceFile.toPath(), destinationFile.toPath());
+                    chooseBox.setText(newPath + f.getName());
                 } catch (IOException ex) {
                     Logger.getLogger(AddTimeTables.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-        });
+         }
+});
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -166,10 +160,10 @@ public class AddMedical extends JFrame {
                     pst = conn.prepareStatement(sql);
                     pst.executeUpdate();
 
-                //    JOptionPane.showMessageDialog(null, "Deleted");
+                   JOptionPane.showMessageDialog(null, "Deleted");
                     clear();
                 } catch (HeadlessException | NumberFormatException | SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Delete");
+                    JOptionPane.showMessageDialog(null, "Not Deleted");
                 }
 
 

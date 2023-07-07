@@ -24,10 +24,11 @@ public class Student extends JFrame {
     private JButton MYATTENDANCEButton;
     private JPanel proPannel;
     private JButton MYMEDICLESButton;
+    private JButton MYGPAButton;
 
     public Student() {
         setVisible(true);
-        setSize(750, 650);
+        setSize(750, 700);
         setTitle("Student");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         add(Student);
@@ -86,6 +87,13 @@ public class Student extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Viewstmedical medi = new Viewstmedical();
+            }
+        });
+        MYGPAButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StudentGPA gpa = new StudentGPA();
+                dispose();
             }
         });
     }

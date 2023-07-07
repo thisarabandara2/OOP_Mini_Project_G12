@@ -10,5 +10,5 @@ public class Demo {
 
         }
     }
-//String username = User.getUserin(); Oka dala log una user ge Id eka gnna hama ekktma
+
 

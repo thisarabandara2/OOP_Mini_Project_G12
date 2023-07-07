@@ -43,7 +43,6 @@ public class FinalMarksCalculator{
         query="insert into final_marks values('"+studentID+"','"+subjectID+"','"+finalpracticalstr+"','"+finaltheorystr+"',"+decimalFormat.format(total)+",'"+grade+"'); ";
         conn.writeData(query);
 
-        //methenta dapan
             float gp= Grade_Calculate.grandpoint(grade);
             GradeCalculator gpa=new GradeCalculator();
             gpa.calculategpa(gp,subjectID,studentID);

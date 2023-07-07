@@ -46,15 +46,11 @@ public class Lecture extends JFrame{
         courseMaterealButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-<<<<<<< Updated upstream
-           // AddMaterials met = new AddMaterials();
-=======
                 try {
-                    Addmatirial met = new Addmatirial();
+                    Addmatirial mat=new Addmatirial();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
->>>>>>> Stashed changes
             }
         });
         MarksButton.addActionListener(new ActionListener() {
@@ -68,16 +64,17 @@ public class Lecture extends JFrame{
             }
         });
 
-        studentAttendanceButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
+       // studentAttendanceButton.addActionListener(new ActionListener() {
+           // @Override
+           // public void actionPerformed(ActionEvent e) {
+              //  Attendance att = new Attendance();
+           // }
+        //});
         studentDetailsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ViewStudents Vstu = new ViewStudents();
+
+                ViewStudents vss =new ViewStudents();
             }
         });
         noticesButton.addActionListener(new ActionListener() {
@@ -91,6 +88,13 @@ public class Lecture extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 Viewmedicals Viewmedicals = new Viewmedicals();
+            }
+        });
+
+        studentEligibilityButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ViewEligibal el = new ViewEligibal();
             }
         });
     }

@@ -47,9 +47,9 @@ public class Addmatirial extends JFrame {
                     Path pathBase = Paths.get("").toAbsolutePath();
                     Path pathRelative = pathBase.relativize(pathAbsolute);
                     String relativePath = pathRelative.toString().replace(File.separator, "/");
-                    chooseBox.setText("notices/" + f.getName());
+                    chooseBox.setText("material/" + f.getName());
 
-                    String newPath = "notices/";
+                    String newPath = "material/";
                     File directory = new File(newPath);
                     if (!directory.exists()) {
                         directory.mkdir();

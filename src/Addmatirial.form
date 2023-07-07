@@ -21,7 +21,7 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Label"/>
+          <text value="subject"/>
         </properties>
       </component>
       <component id="4112" class="javax.swing.JButton" binding="add">
@@ -30,14 +30,6 @@
         </constraints>
         <properties>
           <text value="Add"/>
-        </properties>
-      </component>
-      <component id="133b1" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="3" column="0" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Label"/>
         </properties>
       </component>
       <component id="e65e9" class="javax.swing.JTable" binding="table1" default-binding="true">
@@ -53,7 +45,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Label"/>
+          <text value="Title"/>
         </properties>
       </component>
       <component id="ebbf5" class="javax.swing.JTextField" binding="titletext">

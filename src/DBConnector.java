@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,7 +20,8 @@ public class DBConnector {
                  statement.executeUpdate(query);
                  connection.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+                 JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+                 throw new RuntimeException(e);
         }
 
     }
