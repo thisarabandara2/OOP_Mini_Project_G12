@@ -46,7 +46,15 @@ public class Lecture extends JFrame{
         courseMaterealButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+<<<<<<< Updated upstream
            // AddMaterials met = new AddMaterials();
+=======
+                try {
+                    Addmatirial met = new Addmatirial();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+>>>>>>> Stashed changes
             }
         });
         MarksButton.addActionListener(new ActionListener() {
